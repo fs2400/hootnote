@@ -185,7 +185,12 @@ the permissions across rebuilds), and installs to /Applications. Requires the Xc
 ## Design
 
 The interface follows the "Railway Timetable" direction chosen with the Impeccable design skill
-(`.claude/skills/impeccable`): white timetable stock and ink tabular figures, signal red only for what
-is live (recording, the now-line, the word being spoken), route-line colours for apps and speakers.
-Product record: `PRODUCT.md`. Direction contract: `.impeccable/surfaces/sources-hootnote-ui.md`.
-Tokens: `Sources/Hootnote/UI/Theme.swift`.
+(`.claude/skills/impeccable`, not in this repo; `skills-lock.json` records the version): white timetable
+stock and ink tabular figures, signal red only for what is live (recording, the now-line, the word being
+spoken), route-line colours for apps and speakers. Product record: `PRODUCT.md`. Direction contract:
+`.impeccable/surfaces/sources-hootnote-ui.md`. Tokens: `Sources/Hootnote/UI/Theme.swift`.
+
+## License
+
+MIT, see `LICENSE`. The vendored SpeexDSP code in `Sources/CSpeexDSP` keeps its own BSD-3 license
+(`Sources/CSpeexDSP/COPYING`).
