@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Hootnote · Railway Timetable</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;font:13px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;color:#141518;background:#d9dbe0;font-feature-settings:"tnum"}
+.win{position:absolute;inset:0;background:#fff;display:grid;grid-template-columns:248px 1fr}
+.side{background:#f4f5f7;border-right:1px solid #e3e5e9;padding:14px 10px}
+.lights{display:flex;gap:8px;padding:2px 6px 18px}.lights i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+.nav a{display:flex;align-items:center;gap:9px;padding:6px 10px;border-radius:6px;color:#141518;text-decoration:none;font-weight:500}
+.nav a.on{background:#e2231a14;color:#b81810}
+.nav svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7}
+.grp{margin:18px 10px 6px;font-size:11px;font-weight:600;color:#6b6f78}
+.row{display:grid;grid-template-columns:52px 1fr;padding:5px 10px;border-radius:6px}
+.row b{font-weight:600;color:#141518}.row span{color:#3a3d44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row.live b{color:#e2231a}
+.main{display:flex;flex-direction:column}
+.bar{height:52px;display:flex;align-items:center;gap:12px;padding:0 28px;border-bottom:1px solid #eceef1}
+.bar h1{font-size:15px;font-weight:600}.bar .sp{flex:1}
+.pill{display:flex;align-items:center;gap:7px;font-size:12px;color:#3a3d44}.pill i{width:7px;height:7px;border-radius:50%;background:#14905a}
+.search{width:260px;height:28px;border-radius:7px;background:#f1f2f4;color:#8a8f98;display:flex;align-items:center;padding:0 10px}
+.content{padding:30px 40px 0}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #141518;border-bottom:1px solid #e3e5e9}
+.act{padding:18px 20px 18px 0;display:flex;gap:14px;align-items:flex-start}
+.act+.act{padding-left:20px;border-left:1px solid #e3e5e9}
+.act .k{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:#141518;color:#fff;flex:none}
+.act .k.red{background:#e2231a}
+.act h3{font-size:14px;font-weight:600}.act p{color:#5b5f68;font-size:12px;margin-top:2px}
+.kbd{display:inline-block;border:1px solid #c9ccd2;border-bottom-width:2px;border-radius:4px;padding:0 5px;font-size:11px;color:#141518}
+h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:30px 0 10px;display:flex;align-items:baseline;gap:14px}
+h2 small{font-size:13px;font-weight:500;color:#6b6f78}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;color:#6b6f78;text-align:left;padding:7px 0;border-bottom:2px solid #141518}
+td{padding:11px 0;border-bottom:1px solid #eceef1;vertical-align:middle}
+td.t{width:96px;font-size:20px;font-weight:600;letter-spacing:-.01em}
+td.l{width:190px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+td.m{font-weight:500;font-size:14px}td.m em{display:block;font-style:normal;font-weight:400;color:#6b6f78;font-size:12px}
+td.d{width:110px;color:#3a3d44}td.s{width:170px;font-weight:600}
+.ready{color:#14905a}.work{color:#1f6fd1}.live{color:#e2231a}.soon{color:#8a8f98;font-weight:500}
+.now td{padding:0;border:0;height:0}
+.now .rule{position:relative;height:2px;background:#e2231a}
+.now .rule b{position:absolute;left:0;top:-9px;background:#e2231a;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:3px}
+tr.up td{color:#8a8f98}tr.up td.t{color:#b3b7be}
+.bar2{margin-top:6px;height:3px;background:#e7eefb;border-radius:2px;width:120px}.bar2 i{display:block;height:3px;width:62%;background:#1f6fd1;border-radius:2px}
+.dict{display:grid;grid-template-columns:96px 1fr 140px;gap:0;padding:10px 0;border-bottom:1px solid #eceef1}
+.dict b{font-size:15px;font-weight:600}.dict span{color:#2a2d33}.dict em{font-style:normal;color:#8a8f98;text-align:right}
+</style></head><body><div class="win">
+<aside class="side">
+ <div class="lights"><i></i><i></i><i></i></div>
+ <nav class="nav">
+  <a class="on"><svg viewBox="0 0 16 16"><path d="M2 7.5 8 2.5l6 5V14H10v-4H6v4H2z"/></svg>Home</a>
+  <a><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="2"/><path d="M5 7h6M5 10h4"/></svg>Meetings</a>
+  <a><svg viewBox="0 0 16 16"><rect x="5.5" y="1.5" width="5" height="8" rx="2.5"/><path d="M3 8a5 5 0 0 0 10 0M8 13v2"/></svg>Dictations</a>
+ </nav>
+ <div class="grp">Today</div>
+ <div class="row live"><b>2:30</b><span>Client steering committee</span></div>
+ <div class="row"><b>1:00</b><span>Workshop prep</span></div>
+ <div class="row"><b>10:30</b><span>Hiring plan check-in</span></div>
+ <div class="row"><b>9:00</b><span>Q3 roadmap review</span></div>
+ <div class="grp">Yesterday</div>
+ <div class="row"><b>4:15</b><span>Pricing model review</span></div>
+ <div class="row"><b>11:00</b><span>Weekly team sync</span></div>
+ <div class="row"><b>9:30</b><span>Interview: operations lead</span></div>
+</aside>
+<section class="main">
+ <div class="bar"><h1>Home</h1><div class="sp"></div><div class="pill"><i></i>Listening for calls</div><div class="search">Search meetings and dictations</div></div>
+ <div class="content">
+  <div class="actions">
+   <div class="act"><div class="k red">●</div><div><h3>Record in person</h3><p>Everyone in the room, separated by voice.</p></div></div>
+   <div class="act"><div class="k">↑</div><div><h3>Upload audio</h3><p>Drop a recording or video to transcribe it.</p></div></div>
+   <div class="act"><div class="k">fn</div><div><h3>Dictation</h3><p>Hold <span class="kbd">fn</span> anywhere and speak; release to paste.</p></div></div>
+  </div>
+  <h2>Today <small>Wednesday, October 14 · 4 calls · 2 hr 17 min</small></h2>
+  <table>
+   <tr><th>Time</th><th>Line</th><th>Meeting</th><th>Length</th><th>State</th></tr>
+   <tr class="up"><td class="t">4:00</td><td class="l"><span class="dot" style="background:#c9ccd2"></span>Calendar</td><td class="m">1:1 with Dana<em>Upcoming · 30 min scheduled</em></td><td class="d">—</td><td class="s soon">Upcoming</td></tr>
+   <tr class="now"><td colspan="5"><div class="rule"><b>2:41</b></div></td></tr>
+   <tr><td class="t live">2:30</td><td class="l"><span class="dot" style="background:#5059c9"></span>Microsoft Teams</td><td class="m">Client steering committee<em>You, Priya Raman, 3 others</em></td><td class="d">11:24</td><td class="s live">● Recording</td></tr>
+   <tr><td class="t">1:00</td><td class="l"><span class="dot" style="background:#00897b"></span>Google Meet</td><td class="m">Workshop prep with leadership<em>You, Speaker 1, Speaker 2</em></td><td class="d">52 min</td><td class="s work">Transcribing<div class="bar2"><i></i></div></td></tr>
+   <tr><td class="t">10:30</td><td class="l"><span class="dot" style="background:#2d8cff"></span>Zoom</td><td class="m">Hiring plan check-in<em>You, Marcus Lee · 3 action items</em></td><td class="d">28 min</td><td class="s ready">Ready</td></tr>
+   <tr><td class="t">9:00</td><td class="l"><span class="dot" style="background:#5059c9"></span>Microsoft Teams</td><td class="m">Q3 roadmap review<em>You, Speaker 1, Speaker 2 · 1 action item</em></td><td class="d">46 min</td><td class="s ready">Ready</td></tr>
+  </table>
+  <h2>Recent dictations</h2>
+  <div class="dict"><b>2:12</b><span>Thanks Priya, I'll send the revised timeline before Friday's steering call.</span><em>Mail</em></div>
+  <div class="dict"><b>11:48</b><span>Follow up with Marcus on the two open requisitions and the interview loop.</span><em>Notes</em></div>
+ </div>
+</section></div></body></html>

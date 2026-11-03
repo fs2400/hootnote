@@ -1,0 +1,133 @@
+{
+  "title": "Choose Hootnote's visual world",
+  "question": "The roll assigned the Railway Timetable. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Railway Timetable",
+      "kicker": "THE ROLL",
+      "lineage": "Swiss and European printed railway timetables (Kursbuch, station departure posters)",
+      "thesis": "Your day of calls set like a timetable: every meeting and every sentence keeps its time in one aligned column.",
+      "palette": ["#FFFFFF", "#141518", "#E2231A", "#1F6FD1", "#14905A"],
+      "materials": ["crisp white timetable stock", "ink black tabular figures", "signal red for now and live"],
+      "viewport": "Native sidebar (Home, Meetings, Dictations). Home leads with three actions: record in person, upload audio, dictation. Below, Today set as a timetable: time, line (app or speaker), title, duration, state. A red now-line marks the current time.",
+      "risk": "Reads cold and utilitarian if alignment slips; the column rhythm has to be exact everywhere.",
+      "raised": [
+        {"from": "variable-font-specimen", "raise": "Hierarchy by scale contrast alone: large tabular times carry the timetable, no boxes or cards."},
+        {"from": "crouwel-grid-specimen", "raise": "One strict armature: the time column has the same width on Home, in the meeting list and in every transcript."},
+        {"from": "editorial-sequence-montage-botanical-folio-season", "raise": "A fixed state sequence: Recording, Transcribing, Ready always sit in the same place with the same words."},
+        {"from": "vernacular-ephemera-jet-age-ticket-wallet", "raise": "Nothing jumps: a meeting's state changes where it sits; rows never reorder while you read."},
+        {"from": "pop-culture-shelf-vertical-video-feed-surface", "raise": "The next meeting is one keystroke away: up and down arrows move through the day."}
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html",
+      "htmlFrame": "1440x900"
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Certified Transcript",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "court reporters' certified verbatim transcripts",
+      "thesis": "The verbatim record: who said what, attested line by line.",
+      "palette": ["#FCFCFA", "#1A1A1A", "#2F4BA0", "#8A8F98"],
+      "materials": ["bright bond paper white", "line references in the margin", "speaker names in small caps"],
+      "viewport": "Native sidebar; Home leads with the three actions, then recent meetings as entries in a record index, each with its line count and speakers.",
+      "risk": "The most familiar choice: it is closest to what transcript apps already look like, and can read legalistic.",
+      "html": ".impeccable/mocks/decision/model-pick.html",
+      "htmlFrame": "1440x900"
+    },
+    {
+      "id": "challenger-monochrome",
+      "kind": "challenger",
+      "catalogId": "digital-design-canon-monochrome-product-marketing",
+      "label": "Monochrome Product",
+      "verdict": "competitive",
+      "lineage": "software built in one neutral scale with a single accent",
+      "thesis": "Almost no color: one neutral scale, one accent used only for what is live.",
+      "palette": ["#FAFAFA", "#E6E6E6", "#6B6B6B", "#111111", "#A6C23F"],
+      "materials": ["fine neutral scale", "hairline structure"],
+      "viewport": "Native sidebar; Home as a quiet grid: actions row, recent meetings list, dictations list, all in grays with the accent only on Record.",
+      "case": "Fuses cleanly and holds product clarity; loses on identification because it is the category's own default look.",
+      "risk": "Indistinguishable from many tools; the mode rules call a gray screen with one accent the category default.",
+      "html": ".impeccable/mocks/decision/challenger-monochrome.html",
+      "htmlFrame": "1440x900",
+      "hero": "https://impeccable.style/worlds/cards/digital-design-canon-monochrome-product-marketing-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/digital-design-canon-monochrome-product-marketing.webp"
+    },
+    {
+      "id": "challenger-ticket-wallet",
+      "kind": "challenger",
+      "catalogId": "vernacular-ephemera-jet-age-ticket-wallet",
+      "label": "Jet-Age Ticket Wallet",
+      "verdict": "declined",
+      "lineage": "1960s airline ticket wallets and coupons",
+      "palette": ["#0D1B3D", "#D7262D", "#FFFFFF"],
+      "materials": ["coupon stock", "carbon numerals"],
+      "case": "Consultants travel, but meetings as tear-off coupons costume a working screen.",
+      "kept": "States change in place and never vanish.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp"
+    },
+    {
+      "id": "challenger-variable-font",
+      "kind": "challenger",
+      "catalogId": "variable-font-specimen",
+      "label": "Variable Font Specimen",
+      "verdict": "declined",
+      "lineage": "interactive type specimens",
+      "palette": ["#FAFAF7", "#111111"],
+      "materials": ["paper", "ink"],
+      "case": "No link to meetings or transcripts; a specimen is a showcase, not a work tool.",
+      "kept": "Hierarchy by scale contrast alone."
+    },
+    {
+      "id": "challenger-crouwel",
+      "kind": "challenger",
+      "catalogId": "crouwel-grid-specimen",
+      "label": "Crouwel Grid Specimen",
+      "verdict": "declined",
+      "lineage": "Wim Crouwel gridded posters",
+      "palette": ["#FFFFFF", "#1D4ED8", "#111111"],
+      "materials": ["construction grid"],
+      "case": "Poster logic; a visible construction grid would crowd transcripts.",
+      "kept": "One strict grid as the armature."
+    },
+    {
+      "id": "challenger-botanical",
+      "kind": "challenger",
+      "catalogId": "editorial-sequence-montage-botanical-folio-season",
+      "label": "Botanical Folio",
+      "verdict": "declined",
+      "lineage": "botanical plate folios",
+      "palette": ["#F3EAD8", "#2F5D3A", "#B3261E"],
+      "materials": ["cream plates", "sepia rules"],
+      "case": "Cream-and-engraving softness contradicts the strictly professional brief.",
+      "kept": "A fixed, named sequence of states."
+    },
+    {
+      "id": "challenger-vertical-feed",
+      "kind": "challenger",
+      "catalogId": "pop-culture-shelf-vertical-video-feed-surface",
+      "label": "Vertical Media Feed",
+      "verdict": "declined",
+      "lineage": "full-screen vertical video feeds",
+      "palette": ["#000000", "#FFFFFF"],
+      "materials": ["full-bleed media"],
+      "case": "One item per screen fights scanning a day of meetings.",
+      "kept": "The next item is always one step away."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What meeting-notes apps ship, executed impeccably.",
+    "palette": ["#FFFFFF", "#111827", "#2563EB"],
+    "materials": ["clean grid", "system sans"],
+    "viewport": "Sidebar of meetings, a large Record button, recent meetings as a list with blue accents.",
+    "risk": "Indistinguishable from the competition by design.",
+    "html": ".impeccable/mocks/decision/canon.html",
+    "htmlFrame": "1440x900"
+  },
+  "steer": true
+}

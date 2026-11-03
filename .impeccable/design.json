@@ -1,0 +1,1524 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T05:12:13+00:00",
+  "title": "Design System: Hootnote",
+  "extensions": {
+    "platform": "macOS (SwiftUI + AppKit). Units are points; frontmatter px values equal pt at 1x. Every colour has a Dark Mode pair (-dark); secondary ink, tertiary ink and hairlines also have Increase Contrast pairs (-contrast). Source of truth: Sources/Hootnote/UI/Theme.swift.",
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Timetable Ink",
+        "canonical": "#141518",
+        "source": "Theme.ink",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ],
+        "pairedWith": "ink-dark"
+      },
+      "ink-dark": {
+        "role": "primary",
+        "displayName": "Night Ink",
+        "canonical": "#F1F2F4",
+        "source": "Theme.ink",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 264.5)",
+          "oklch(26.4% 0.003 264.5)",
+          "oklch(37.9% 0.003 264.5)",
+          "oklch(49.3% 0.003 264.5)",
+          "oklch(60.7% 0.003 264.5)",
+          "oklch(72.1% 0.003 264.5)",
+          "oklch(83.6% 0.003 264.5)",
+          "oklch(95.0% 0.003 264.5)"
+        ],
+        "pairedWith": "ink"
+      },
+      "signal": {
+        "role": "secondary",
+        "displayName": "Signal Red",
+        "canonical": "#D91F17",
+        "source": "Theme.signal",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.218 29.0)",
+          "oklch(26.4% 0.218 29.0)",
+          "oklch(37.9% 0.218 29.0)",
+          "oklch(49.3% 0.218 29.0)",
+          "oklch(60.7% 0.218 29.0)",
+          "oklch(72.1% 0.218 29.0)",
+          "oklch(83.6% 0.218 29.0)",
+          "oklch(95.0% 0.218 29.0)"
+        ],
+        "pairedWith": "signal-dark"
+      },
+      "signal-dark": {
+        "role": "secondary",
+        "displayName": "Signal Red (Dark)",
+        "canonical": "#FF5A50",
+        "source": "Theme.signal",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.202 27.2)",
+          "oklch(26.4% 0.202 27.2)",
+          "oklch(37.9% 0.202 27.2)",
+          "oklch(49.3% 0.202 27.2)",
+          "oklch(60.7% 0.202 27.2)",
+          "oklch(72.1% 0.202 27.2)",
+          "oklch(83.6% 0.202 27.2)",
+          "oklch(95.0% 0.202 27.2)"
+        ],
+        "pairedWith": "signal"
+      },
+      "signal-wash": {
+        "role": "secondary",
+        "displayName": "Signal Wash",
+        "canonical": "#D91F1729",
+        "source": "Theme.signalWash (signal at 16%)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.218 29.0)",
+          "oklch(26.4% 0.218 29.0)",
+          "oklch(37.9% 0.218 29.0)",
+          "oklch(49.3% 0.218 29.0)",
+          "oklch(60.7% 0.218 29.0)",
+          "oklch(72.1% 0.218 29.0)",
+          "oklch(83.6% 0.218 29.0)",
+          "oklch(95.0% 0.218 29.0)"
+        ],
+        "pairedWith": "signal-wash-dark"
+      },
+      "signal-wash-dark": {
+        "role": "secondary",
+        "displayName": "Signal Wash (Dark)",
+        "canonical": "#FF5A5029",
+        "source": "Theme.signalWash (signal at 16%)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.202 27.2)",
+          "oklch(26.4% 0.202 27.2)",
+          "oklch(37.9% 0.202 27.2)",
+          "oklch(49.3% 0.202 27.2)",
+          "oklch(60.7% 0.202 27.2)",
+          "oklch(72.1% 0.202 27.2)",
+          "oklch(83.6% 0.202 27.2)",
+          "oklch(95.0% 0.202 27.2)"
+        ],
+        "pairedWith": "signal-wash"
+      },
+      "on-signal": {
+        "role": "secondary",
+        "displayName": "On Signal",
+        "canonical": "#FFFFFF",
+        "source": "Theme.onSignal",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0 0)",
+          "oklch(26.4% 0 0)",
+          "oklch(37.9% 0 0)",
+          "oklch(49.3% 0 0)",
+          "oklch(60.7% 0 0)",
+          "oklch(72.1% 0 0)",
+          "oklch(83.6% 0 0)",
+          "oklch(95.0% 0 0)"
+        ],
+        "pairedWith": "on-signal-dark"
+      },
+      "on-signal-dark": {
+        "role": "secondary",
+        "displayName": "On Signal (Dark)",
+        "canonical": "#141518",
+        "source": "Theme.onSignal",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ],
+        "pairedWith": "on-signal"
+      },
+      "pill-signal": {
+        "role": "secondary",
+        "displayName": "Pill Signal",
+        "canonical": "#FF5A50",
+        "source": "Theme.pillSignal",
+        "appearance": "both",
+        "tonalRamp": [
+          "oklch(15.0% 0.202 27.2)",
+          "oklch(26.4% 0.202 27.2)",
+          "oklch(37.9% 0.202 27.2)",
+          "oklch(49.3% 0.202 27.2)",
+          "oklch(60.7% 0.202 27.2)",
+          "oklch(72.1% 0.202 27.2)",
+          "oklch(83.6% 0.202 27.2)",
+          "oklch(95.0% 0.202 27.2)"
+        ]
+      },
+      "line-blue": {
+        "role": "tertiary",
+        "displayName": "Blue Line",
+        "canonical": "#1C66C4",
+        "source": "Theme.lines[0] (speaker route 1)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.163 256.9)",
+          "oklch(26.4% 0.163 256.9)",
+          "oklch(37.9% 0.163 256.9)",
+          "oklch(49.3% 0.163 256.9)",
+          "oklch(60.7% 0.163 256.9)",
+          "oklch(72.1% 0.163 256.9)",
+          "oklch(83.6% 0.163 256.9)",
+          "oklch(95.0% 0.163 256.9)"
+        ],
+        "pairedWith": "line-blue-dark"
+      },
+      "line-blue-dark": {
+        "role": "tertiary",
+        "displayName": "Blue Line (Dark)",
+        "canonical": "#5AA2FF",
+        "source": "Theme.lines[0] (speaker route 1)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.155 255.7)",
+          "oklch(26.4% 0.155 255.7)",
+          "oklch(37.9% 0.155 255.7)",
+          "oklch(49.3% 0.155 255.7)",
+          "oklch(60.7% 0.155 255.7)",
+          "oklch(72.1% 0.155 255.7)",
+          "oklch(83.6% 0.155 255.7)",
+          "oklch(95.0% 0.155 255.7)"
+        ],
+        "pairedWith": "line-blue"
+      },
+      "line-green": {
+        "role": "tertiary",
+        "displayName": "Green Line",
+        "canonical": "#0F8A52",
+        "source": "Theme.lines[1] (speaker route 2)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.132 156.0)",
+          "oklch(26.4% 0.132 156.0)",
+          "oklch(37.9% 0.132 156.0)",
+          "oklch(49.3% 0.132 156.0)",
+          "oklch(60.7% 0.132 156.0)",
+          "oklch(72.1% 0.132 156.0)",
+          "oklch(83.6% 0.132 156.0)",
+          "oklch(95.0% 0.132 156.0)"
+        ],
+        "pairedWith": "line-green-dark"
+      },
+      "line-green-dark": {
+        "role": "tertiary",
+        "displayName": "Green Line (Dark)",
+        "canonical": "#3CCB86",
+        "source": "Theme.lines[1] (speaker route 2)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.157 157.6)",
+          "oklch(26.4% 0.157 157.6)",
+          "oklch(37.9% 0.157 157.6)",
+          "oklch(49.3% 0.157 157.6)",
+          "oklch(60.7% 0.157 157.6)",
+          "oklch(72.1% 0.157 157.6)",
+          "oklch(83.6% 0.157 157.6)",
+          "oklch(95.0% 0.157 157.6)"
+        ],
+        "pairedWith": "line-green"
+      },
+      "line-purple": {
+        "role": "tertiary",
+        "displayName": "Purple Line",
+        "canonical": "#7A3FB0",
+        "source": "Theme.lines[2] (speaker route 3)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.174 304.9)",
+          "oklch(26.4% 0.174 304.9)",
+          "oklch(37.9% 0.174 304.9)",
+          "oklch(49.3% 0.174 304.9)",
+          "oklch(60.7% 0.174 304.9)",
+          "oklch(72.1% 0.174 304.9)",
+          "oklch(83.6% 0.174 304.9)",
+          "oklch(95.0% 0.174 304.9)"
+        ],
+        "pairedWith": "line-purple-dark"
+      },
+      "line-purple-dark": {
+        "role": "tertiary",
+        "displayName": "Purple Line (Dark)",
+        "canonical": "#B78BE8",
+        "source": "Theme.lines[2] (speaker route 3)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.139 304.9)",
+          "oklch(26.4% 0.139 304.9)",
+          "oklch(37.9% 0.139 304.9)",
+          "oklch(49.3% 0.139 304.9)",
+          "oklch(60.7% 0.139 304.9)",
+          "oklch(72.1% 0.139 304.9)",
+          "oklch(83.6% 0.139 304.9)",
+          "oklch(95.0% 0.139 304.9)"
+        ],
+        "pairedWith": "line-purple"
+      },
+      "line-orange": {
+        "role": "tertiary",
+        "displayName": "Orange Line",
+        "canonical": "#D06A00",
+        "source": "Theme.lines[3] (speaker route 4)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.158 54.4)",
+          "oklch(26.4% 0.158 54.4)",
+          "oklch(37.9% 0.158 54.4)",
+          "oklch(49.3% 0.158 54.4)",
+          "oklch(60.7% 0.158 54.4)",
+          "oklch(72.1% 0.158 54.4)",
+          "oklch(83.6% 0.158 54.4)",
+          "oklch(95.0% 0.158 54.4)"
+        ],
+        "pairedWith": "line-orange-dark"
+      },
+      "line-orange-dark": {
+        "role": "tertiary",
+        "displayName": "Orange Line (Dark)",
+        "canonical": "#F2A040",
+        "source": "Theme.lines[3] (speaker route 4)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.145 66.4)",
+          "oklch(26.4% 0.145 66.4)",
+          "oklch(37.9% 0.145 66.4)",
+          "oklch(49.3% 0.145 66.4)",
+          "oklch(60.7% 0.145 66.4)",
+          "oklch(72.1% 0.145 66.4)",
+          "oklch(83.6% 0.145 66.4)",
+          "oklch(95.0% 0.145 66.4)"
+        ],
+        "pairedWith": "line-orange"
+      },
+      "line-teal": {
+        "role": "tertiary",
+        "displayName": "Teal Line",
+        "canonical": "#00828C",
+        "source": "Theme.lines[4] (speaker route 5)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.094 204.3)",
+          "oklch(26.4% 0.094 204.3)",
+          "oklch(37.9% 0.094 204.3)",
+          "oklch(49.3% 0.094 204.3)",
+          "oklch(60.7% 0.094 204.3)",
+          "oklch(72.1% 0.094 204.3)",
+          "oklch(83.6% 0.094 204.3)",
+          "oklch(95.0% 0.094 204.3)"
+        ],
+        "pairedWith": "line-teal-dark"
+      },
+      "line-teal-dark": {
+        "role": "tertiary",
+        "displayName": "Teal Line (Dark)",
+        "canonical": "#3CC4CC",
+        "source": "Theme.lines[4] (speaker route 5)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.114 200.8)",
+          "oklch(26.4% 0.114 200.8)",
+          "oklch(37.9% 0.114 200.8)",
+          "oklch(49.3% 0.114 200.8)",
+          "oklch(60.7% 0.114 200.8)",
+          "oklch(72.1% 0.114 200.8)",
+          "oklch(83.6% 0.114 200.8)",
+          "oklch(95.0% 0.114 200.8)"
+        ],
+        "pairedWith": "line-teal"
+      },
+      "line-magenta": {
+        "role": "tertiary",
+        "displayName": "Magenta Line",
+        "canonical": "#B8336A",
+        "source": "Theme.lines[5] (speaker route 6)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.175 359.8)",
+          "oklch(26.4% 0.175 359.8)",
+          "oklch(37.9% 0.175 359.8)",
+          "oklch(49.3% 0.175 359.8)",
+          "oklch(60.7% 0.175 359.8)",
+          "oklch(72.1% 0.175 359.8)",
+          "oklch(83.6% 0.175 359.8)",
+          "oklch(95.0% 0.175 359.8)"
+        ],
+        "pairedWith": "line-magenta-dark"
+      },
+      "line-magenta-dark": {
+        "role": "tertiary",
+        "displayName": "Magenta Line (Dark)",
+        "canonical": "#F07AA8",
+        "source": "Theme.lines[5] (speaker route 6)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.153 356.9)",
+          "oklch(26.4% 0.153 356.9)",
+          "oklch(37.9% 0.153 356.9)",
+          "oklch(49.3% 0.153 356.9)",
+          "oklch(60.7% 0.153 356.9)",
+          "oklch(72.1% 0.153 356.9)",
+          "oklch(83.6% 0.153 356.9)",
+          "oklch(95.0% 0.153 356.9)"
+        ],
+        "pairedWith": "line-magenta"
+      },
+      "line-brown": {
+        "role": "tertiary",
+        "displayName": "Brown Line",
+        "canonical": "#6D5444",
+        "source": "Theme.lines[6] (speaker route 7)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.042 54.1)",
+          "oklch(26.4% 0.042 54.1)",
+          "oklch(37.9% 0.042 54.1)",
+          "oklch(49.3% 0.042 54.1)",
+          "oklch(60.7% 0.042 54.1)",
+          "oklch(72.1% 0.042 54.1)",
+          "oklch(83.6% 0.042 54.1)",
+          "oklch(95.0% 0.042 54.1)"
+        ],
+        "pairedWith": "line-brown-dark"
+      },
+      "line-brown-dark": {
+        "role": "tertiary",
+        "displayName": "Brown Line (Dark)",
+        "canonical": "#C2A48E",
+        "source": "Theme.lines[6] (speaker route 7)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.047 58.2)",
+          "oklch(26.4% 0.047 58.2)",
+          "oklch(37.9% 0.047 58.2)",
+          "oklch(49.3% 0.047 58.2)",
+          "oklch(60.7% 0.047 58.2)",
+          "oklch(72.1% 0.047 58.2)",
+          "oklch(83.6% 0.047 58.2)",
+          "oklch(95.0% 0.047 58.2)"
+        ],
+        "pairedWith": "line-brown"
+      },
+      "line-indigo": {
+        "role": "tertiary",
+        "displayName": "Indigo Line",
+        "canonical": "#3B4BB5",
+        "source": "Theme.lines[7] (speaker route 8)",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.168 271.7)",
+          "oklch(26.4% 0.168 271.7)",
+          "oklch(37.9% 0.168 271.7)",
+          "oklch(49.3% 0.168 271.7)",
+          "oklch(60.7% 0.168 271.7)",
+          "oklch(72.1% 0.168 271.7)",
+          "oklch(83.6% 0.168 271.7)",
+          "oklch(95.0% 0.168 271.7)"
+        ],
+        "pairedWith": "line-indigo-dark"
+      },
+      "line-indigo-dark": {
+        "role": "tertiary",
+        "displayName": "Indigo Line (Dark)",
+        "canonical": "#8C98F0",
+        "source": "Theme.lines[7] (speaker route 8)",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.129 276.7)",
+          "oklch(26.4% 0.129 276.7)",
+          "oklch(37.9% 0.129 276.7)",
+          "oklch(49.3% 0.129 276.7)",
+          "oklch(60.7% 0.129 276.7)",
+          "oklch(72.1% 0.129 276.7)",
+          "oklch(83.6% 0.129 276.7)",
+          "oklch(95.0% 0.129 276.7)"
+        ],
+        "pairedWith": "line-indigo"
+      },
+      "app-zoom": {
+        "role": "tertiary",
+        "displayName": "Zoom Line",
+        "canonical": "#2D72E8",
+        "source": "Theme.line(forApp:) zoom",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.192 260.5)",
+          "oklch(26.4% 0.192 260.5)",
+          "oklch(37.9% 0.192 260.5)",
+          "oklch(49.3% 0.192 260.5)",
+          "oklch(60.7% 0.192 260.5)",
+          "oklch(72.1% 0.192 260.5)",
+          "oklch(83.6% 0.192 260.5)",
+          "oklch(95.0% 0.192 260.5)"
+        ],
+        "pairedWith": "app-zoom-dark"
+      },
+      "app-zoom-dark": {
+        "role": "tertiary",
+        "displayName": "Zoom Line (Dark)",
+        "canonical": "#5C97FF",
+        "source": "Theme.line(forApp:) zoom",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.166 260.9)",
+          "oklch(26.4% 0.166 260.9)",
+          "oklch(37.9% 0.166 260.9)",
+          "oklch(49.3% 0.166 260.9)",
+          "oklch(60.7% 0.166 260.9)",
+          "oklch(72.1% 0.166 260.9)",
+          "oklch(83.6% 0.166 260.9)",
+          "oklch(95.0% 0.166 260.9)"
+        ],
+        "pairedWith": "app-zoom"
+      },
+      "app-teams": {
+        "role": "tertiary",
+        "displayName": "Microsoft Teams Line",
+        "canonical": "#5059C9",
+        "source": "Theme.line(forApp:) teams",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.172 275.2)",
+          "oklch(26.4% 0.172 275.2)",
+          "oklch(37.9% 0.172 275.2)",
+          "oklch(49.3% 0.172 275.2)",
+          "oklch(60.7% 0.172 275.2)",
+          "oklch(72.1% 0.172 275.2)",
+          "oklch(83.6% 0.172 275.2)",
+          "oklch(95.0% 0.172 275.2)"
+        ],
+        "pairedWith": "app-teams-dark"
+      },
+      "app-teams-dark": {
+        "role": "tertiary",
+        "displayName": "Microsoft Teams Line (Dark)",
+        "canonical": "#8C93F0",
+        "source": "Theme.line(forApp:) teams",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.136 279.0)",
+          "oklch(26.4% 0.136 279.0)",
+          "oklch(37.9% 0.136 279.0)",
+          "oklch(49.3% 0.136 279.0)",
+          "oklch(60.7% 0.136 279.0)",
+          "oklch(72.1% 0.136 279.0)",
+          "oklch(83.6% 0.136 279.0)",
+          "oklch(95.0% 0.136 279.0)"
+        ],
+        "pairedWith": "app-teams"
+      },
+      "app-browser": {
+        "role": "tertiary",
+        "displayName": "Browser calls (Chrome, Edge, Arc, Brave, Firefox, Safari) Line",
+        "canonical": "#00897B",
+        "source": "Theme.line(forApp:) browser",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.101 182.5)",
+          "oklch(26.4% 0.101 182.5)",
+          "oklch(37.9% 0.101 182.5)",
+          "oklch(49.3% 0.101 182.5)",
+          "oklch(60.7% 0.101 182.5)",
+          "oklch(72.1% 0.101 182.5)",
+          "oklch(83.6% 0.101 182.5)",
+          "oklch(95.0% 0.101 182.5)"
+        ],
+        "pairedWith": "app-browser-dark"
+      },
+      "app-browser-dark": {
+        "role": "tertiary",
+        "displayName": "Browser calls (Chrome, Edge, Arc, Brave, Firefox, Safari) Line (Dark)",
+        "canonical": "#3CC4B4",
+        "source": "Theme.line(forApp:) browser",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.117 183.7)",
+          "oklch(26.4% 0.117 183.7)",
+          "oklch(37.9% 0.117 183.7)",
+          "oklch(49.3% 0.117 183.7)",
+          "oklch(60.7% 0.117 183.7)",
+          "oklch(72.1% 0.117 183.7)",
+          "oklch(83.6% 0.117 183.7)",
+          "oklch(95.0% 0.117 183.7)"
+        ],
+        "pairedWith": "app-browser"
+      },
+      "app-webex": {
+        "role": "tertiary",
+        "displayName": "Webex Line",
+        "canonical": "#00A0D1",
+        "source": "Theme.line(forApp:) webex",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.130 228.9)",
+          "oklch(26.4% 0.130 228.9)",
+          "oklch(37.9% 0.130 228.9)",
+          "oklch(49.3% 0.130 228.9)",
+          "oklch(60.7% 0.130 228.9)",
+          "oklch(72.1% 0.130 228.9)",
+          "oklch(83.6% 0.130 228.9)",
+          "oklch(95.0% 0.130 228.9)"
+        ],
+        "pairedWith": "app-webex-dark"
+      },
+      "app-webex-dark": {
+        "role": "tertiary",
+        "displayName": "Webex Line (Dark)",
+        "canonical": "#4CC8EE",
+        "source": "Theme.line(forApp:) webex",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.120 222.0)",
+          "oklch(26.4% 0.120 222.0)",
+          "oklch(37.9% 0.120 222.0)",
+          "oklch(49.3% 0.120 222.0)",
+          "oklch(60.7% 0.120 222.0)",
+          "oklch(72.1% 0.120 222.0)",
+          "oklch(83.6% 0.120 222.0)",
+          "oklch(95.0% 0.120 222.0)"
+        ],
+        "pairedWith": "app-webex"
+      },
+      "app-slack": {
+        "role": "tertiary",
+        "displayName": "Slack Line",
+        "canonical": "#611F69",
+        "source": "Theme.line(forApp:) slack",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.136 323.2)",
+          "oklch(26.4% 0.136 323.2)",
+          "oklch(37.9% 0.136 323.2)",
+          "oklch(49.3% 0.136 323.2)",
+          "oklch(60.7% 0.136 323.2)",
+          "oklch(72.1% 0.136 323.2)",
+          "oklch(83.6% 0.136 323.2)",
+          "oklch(95.0% 0.136 323.2)"
+        ],
+        "pairedWith": "app-slack-dark"
+      },
+      "app-slack-dark": {
+        "role": "tertiary",
+        "displayName": "Slack Line (Dark)",
+        "canonical": "#C17FCB",
+        "source": "Theme.line(forApp:) slack",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.130 322.1)",
+          "oklch(26.4% 0.130 322.1)",
+          "oklch(37.9% 0.130 322.1)",
+          "oklch(49.3% 0.130 322.1)",
+          "oklch(60.7% 0.130 322.1)",
+          "oklch(72.1% 0.130 322.1)",
+          "oklch(83.6% 0.130 322.1)",
+          "oklch(95.0% 0.130 322.1)"
+        ],
+        "pairedWith": "app-slack"
+      },
+      "app-facetime": {
+        "role": "tertiary",
+        "displayName": "FaceTime and WhatsApp Line",
+        "canonical": "#1F9D3F",
+        "source": "Theme.line(forApp:) facetime",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.170 146.9)",
+          "oklch(26.4% 0.170 146.9)",
+          "oklch(37.9% 0.170 146.9)",
+          "oklch(49.3% 0.170 146.9)",
+          "oklch(60.7% 0.170 146.9)",
+          "oklch(72.1% 0.170 146.9)",
+          "oklch(83.6% 0.170 146.9)",
+          "oklch(95.0% 0.170 146.9)"
+        ],
+        "pairedWith": "app-facetime-dark"
+      },
+      "app-facetime-dark": {
+        "role": "tertiary",
+        "displayName": "FaceTime and WhatsApp Line (Dark)",
+        "canonical": "#4CCB6A",
+        "source": "Theme.line(forApp:) facetime",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.176 148.2)",
+          "oklch(26.4% 0.176 148.2)",
+          "oklch(37.9% 0.176 148.2)",
+          "oklch(49.3% 0.176 148.2)",
+          "oklch(60.7% 0.176 148.2)",
+          "oklch(72.1% 0.176 148.2)",
+          "oklch(83.6% 0.176 148.2)",
+          "oklch(95.0% 0.176 148.2)"
+        ],
+        "pairedWith": "app-facetime"
+      },
+      "ready": {
+        "role": "state",
+        "displayName": "Ready Green",
+        "canonical": "#0B7A48",
+        "source": "Theme.ready",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.120 156.1)",
+          "oklch(26.4% 0.120 156.1)",
+          "oklch(37.9% 0.120 156.1)",
+          "oklch(49.3% 0.120 156.1)",
+          "oklch(60.7% 0.120 156.1)",
+          "oklch(72.1% 0.120 156.1)",
+          "oklch(83.6% 0.120 156.1)",
+          "oklch(95.0% 0.120 156.1)"
+        ],
+        "pairedWith": "ready-dark"
+      },
+      "ready-dark": {
+        "role": "state",
+        "displayName": "Ready Green (Dark)",
+        "canonical": "#3CCB86",
+        "source": "Theme.ready",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.157 157.6)",
+          "oklch(26.4% 0.157 157.6)",
+          "oklch(37.9% 0.157 157.6)",
+          "oklch(49.3% 0.157 157.6)",
+          "oklch(60.7% 0.157 157.6)",
+          "oklch(72.1% 0.157 157.6)",
+          "oklch(83.6% 0.157 157.6)",
+          "oklch(95.0% 0.157 157.6)"
+        ],
+        "pairedWith": "ready"
+      },
+      "working": {
+        "role": "state",
+        "displayName": "Working Blue",
+        "canonical": "#1C66C4",
+        "source": "Theme.working",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.163 256.9)",
+          "oklch(26.4% 0.163 256.9)",
+          "oklch(37.9% 0.163 256.9)",
+          "oklch(49.3% 0.163 256.9)",
+          "oklch(60.7% 0.163 256.9)",
+          "oklch(72.1% 0.163 256.9)",
+          "oklch(83.6% 0.163 256.9)",
+          "oklch(95.0% 0.163 256.9)"
+        ],
+        "pairedWith": "working-dark"
+      },
+      "working-dark": {
+        "role": "state",
+        "displayName": "Working Blue (Dark)",
+        "canonical": "#5AA2FF",
+        "source": "Theme.working",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.155 255.7)",
+          "oklch(26.4% 0.155 255.7)",
+          "oklch(37.9% 0.155 255.7)",
+          "oklch(49.3% 0.155 255.7)",
+          "oklch(60.7% 0.155 255.7)",
+          "oklch(72.1% 0.155 255.7)",
+          "oklch(83.6% 0.155 255.7)",
+          "oklch(95.0% 0.155 255.7)"
+        ],
+        "pairedWith": "working"
+      },
+      "caution": {
+        "role": "state",
+        "displayName": "Caution Amber",
+        "canonical": "#9A5C00",
+        "source": "Theme.caution",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.119 65.9)",
+          "oklch(26.4% 0.119 65.9)",
+          "oklch(37.9% 0.119 65.9)",
+          "oklch(49.3% 0.119 65.9)",
+          "oklch(60.7% 0.119 65.9)",
+          "oklch(72.1% 0.119 65.9)",
+          "oklch(83.6% 0.119 65.9)",
+          "oklch(95.0% 0.119 65.9)"
+        ],
+        "pairedWith": "caution-dark"
+      },
+      "caution-dark": {
+        "role": "state",
+        "displayName": "Caution Amber (Dark)",
+        "canonical": "#F2A93B",
+        "source": "Theme.caution",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.147 73.0)",
+          "oklch(26.4% 0.147 73.0)",
+          "oklch(37.9% 0.147 73.0)",
+          "oklch(49.3% 0.147 73.0)",
+          "oklch(60.7% 0.147 73.0)",
+          "oklch(72.1% 0.147 73.0)",
+          "oklch(83.6% 0.147 73.0)",
+          "oklch(95.0% 0.147 73.0)"
+        ],
+        "pairedWith": "caution"
+      },
+      "on-caution": {
+        "role": "state",
+        "displayName": "On Caution",
+        "canonical": "#FFFFFF",
+        "source": "Theme.onCaution",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0 0)",
+          "oklch(26.4% 0 0)",
+          "oklch(37.9% 0 0)",
+          "oklch(49.3% 0 0)",
+          "oklch(60.7% 0 0)",
+          "oklch(72.1% 0 0)",
+          "oklch(83.6% 0 0)",
+          "oklch(95.0% 0 0)"
+        ],
+        "pairedWith": "on-caution-dark"
+      },
+      "on-caution-dark": {
+        "role": "state",
+        "displayName": "On Caution (Dark)",
+        "canonical": "#141518",
+        "source": "Theme.onCaution",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ],
+        "pairedWith": "on-caution"
+      },
+      "search-wash": {
+        "role": "state",
+        "displayName": "Search Amber Wash",
+        "canonical": "#F2A93B52",
+        "source": "Theme.searchWash (#F2A93B at 32%)",
+        "appearance": "both",
+        "tonalRamp": [
+          "oklch(15.0% 0.147 73.0)",
+          "oklch(26.4% 0.147 73.0)",
+          "oklch(37.9% 0.147 73.0)",
+          "oklch(49.3% 0.147 73.0)",
+          "oklch(60.7% 0.147 73.0)",
+          "oklch(72.1% 0.147 73.0)",
+          "oklch(83.6% 0.147 73.0)",
+          "oklch(95.0% 0.147 73.0)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Timetable Stock",
+        "canonical": "#FFFFFF",
+        "source": "Theme.ground",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0 0)",
+          "oklch(26.4% 0 0)",
+          "oklch(37.9% 0 0)",
+          "oklch(49.3% 0 0)",
+          "oklch(60.7% 0 0)",
+          "oklch(72.1% 0 0)",
+          "oklch(83.6% 0 0)",
+          "oklch(95.0% 0 0)"
+        ],
+        "pairedWith": "ground-dark"
+      },
+      "ground-dark": {
+        "role": "neutral",
+        "displayName": "Graphite Stock",
+        "canonical": "#141518",
+        "source": "Theme.ground",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ],
+        "pairedWith": "ground"
+      },
+      "ground-raised": {
+        "role": "neutral",
+        "displayName": "Raised Stock",
+        "canonical": "#F6F7F9",
+        "source": "Theme.groundRaised",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 264.5)",
+          "oklch(26.4% 0.003 264.5)",
+          "oklch(37.9% 0.003 264.5)",
+          "oklch(49.3% 0.003 264.5)",
+          "oklch(60.7% 0.003 264.5)",
+          "oklch(72.1% 0.003 264.5)",
+          "oklch(83.6% 0.003 264.5)",
+          "oklch(95.0% 0.003 264.5)"
+        ],
+        "pairedWith": "ground-raised-dark"
+      },
+      "ground-raised-dark": {
+        "role": "neutral",
+        "displayName": "Raised Graphite",
+        "canonical": "#1C1D21",
+        "source": "Theme.groundRaised",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.008 274.6)",
+          "oklch(26.4% 0.008 274.6)",
+          "oklch(37.9% 0.008 274.6)",
+          "oklch(49.3% 0.008 274.6)",
+          "oklch(60.7% 0.008 274.6)",
+          "oklch(72.1% 0.008 274.6)",
+          "oklch(83.6% 0.008 274.6)",
+          "oklch(95.0% 0.008 274.6)"
+        ],
+        "pairedWith": "ground-raised"
+      },
+      "ink-secondary": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "canonical": "#50545C",
+        "source": "Theme.inkSecondary",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.014 264.4)",
+          "oklch(26.4% 0.014 264.4)",
+          "oklch(37.9% 0.014 264.4)",
+          "oklch(49.3% 0.014 264.4)",
+          "oklch(60.7% 0.014 264.4)",
+          "oklch(72.1% 0.014 264.4)",
+          "oklch(83.6% 0.014 264.4)",
+          "oklch(95.0% 0.014 264.4)"
+        ],
+        "pairedWith": "ink-secondary-dark"
+      },
+      "ink-secondary-dark": {
+        "role": "neutral",
+        "displayName": "Secondary Ink (Dark)",
+        "canonical": "#A9ADB5",
+        "source": "Theme.inkSecondary",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 264.5)",
+          "oklch(26.4% 0.012 264.5)",
+          "oklch(37.9% 0.012 264.5)",
+          "oklch(49.3% 0.012 264.5)",
+          "oklch(60.7% 0.012 264.5)",
+          "oklch(72.1% 0.012 264.5)",
+          "oklch(83.6% 0.012 264.5)",
+          "oklch(95.0% 0.012 264.5)"
+        ],
+        "pairedWith": "ink-secondary"
+      },
+      "ink-secondary-contrast": {
+        "role": "neutral",
+        "displayName": "Secondary Ink (Increase Contrast)",
+        "canonical": "#2E3036",
+        "source": "Theme.inkSecondary",
+        "appearance": "increase-contrast light",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 271.0)",
+          "oklch(26.4% 0.011 271.0)",
+          "oklch(37.9% 0.011 271.0)",
+          "oklch(49.3% 0.011 271.0)",
+          "oklch(60.7% 0.011 271.0)",
+          "oklch(72.1% 0.011 271.0)",
+          "oklch(83.6% 0.011 271.0)",
+          "oklch(95.0% 0.011 271.0)"
+        ],
+        "pairedWith": "ink-secondary-contrast-dark"
+      },
+      "ink-secondary-contrast-dark": {
+        "role": "neutral",
+        "displayName": "Secondary Ink (Increase Contrast, Dark)",
+        "canonical": "#D3D6DC",
+        "source": "Theme.inkSecondary",
+        "appearance": "increase-contrast dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 264.5)",
+          "oklch(26.4% 0.009 264.5)",
+          "oklch(37.9% 0.009 264.5)",
+          "oklch(49.3% 0.009 264.5)",
+          "oklch(60.7% 0.009 264.5)",
+          "oklch(72.1% 0.009 264.5)",
+          "oklch(83.6% 0.009 264.5)",
+          "oklch(95.0% 0.009 264.5)"
+        ],
+        "pairedWith": "ink-secondary-contrast"
+      },
+      "ink-tertiary": {
+        "role": "neutral",
+        "displayName": "Tertiary Ink",
+        "canonical": "#6B6F76",
+        "source": "Theme.inkTertiary",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 261.8)",
+          "oklch(26.4% 0.012 261.8)",
+          "oklch(37.9% 0.012 261.8)",
+          "oklch(49.3% 0.012 261.8)",
+          "oklch(60.7% 0.012 261.8)",
+          "oklch(72.1% 0.012 261.8)",
+          "oklch(83.6% 0.012 261.8)",
+          "oklch(95.0% 0.012 261.8)"
+        ],
+        "pairedWith": "ink-tertiary-dark"
+      },
+      "ink-tertiary-dark": {
+        "role": "neutral",
+        "displayName": "Tertiary Ink (Dark)",
+        "canonical": "#8A8E97",
+        "source": "Theme.inkTertiary",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.014 266.6)",
+          "oklch(26.4% 0.014 266.6)",
+          "oklch(37.9% 0.014 266.6)",
+          "oklch(49.3% 0.014 266.6)",
+          "oklch(60.7% 0.014 266.6)",
+          "oklch(72.1% 0.014 266.6)",
+          "oklch(83.6% 0.014 266.6)",
+          "oklch(95.0% 0.014 266.6)"
+        ],
+        "pairedWith": "ink-tertiary"
+      },
+      "ink-tertiary-contrast": {
+        "role": "neutral",
+        "displayName": "Tertiary Ink (Increase Contrast)",
+        "canonical": "#45484E",
+        "source": "Theme.inkTertiary",
+        "appearance": "increase-contrast light",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 264.4)",
+          "oklch(26.4% 0.011 264.4)",
+          "oklch(37.9% 0.011 264.4)",
+          "oklch(49.3% 0.011 264.4)",
+          "oklch(60.7% 0.011 264.4)",
+          "oklch(72.1% 0.011 264.4)",
+          "oklch(83.6% 0.011 264.4)",
+          "oklch(95.0% 0.011 264.4)"
+        ],
+        "pairedWith": "ink-tertiary-contrast-dark"
+      },
+      "ink-tertiary-contrast-dark": {
+        "role": "neutral",
+        "displayName": "Tertiary Ink (Increase Contrast, Dark)",
+        "canonical": "#B8BBC2",
+        "source": "Theme.inkTertiary",
+        "appearance": "increase-contrast dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.010 267.3)",
+          "oklch(26.4% 0.010 267.3)",
+          "oklch(37.9% 0.010 267.3)",
+          "oklch(49.3% 0.010 267.3)",
+          "oklch(60.7% 0.010 267.3)",
+          "oklch(72.1% 0.010 267.3)",
+          "oklch(83.6% 0.010 267.3)",
+          "oklch(95.0% 0.010 267.3)"
+        ],
+        "pairedWith": "ink-tertiary-contrast"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#E5E7EB",
+        "source": "Theme.rule",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 264.5)",
+          "oklch(26.4% 0.006 264.5)",
+          "oklch(37.9% 0.006 264.5)",
+          "oklch(49.3% 0.006 264.5)",
+          "oklch(60.7% 0.006 264.5)",
+          "oklch(72.1% 0.006 264.5)",
+          "oklch(83.6% 0.006 264.5)",
+          "oklch(95.0% 0.006 264.5)"
+        ],
+        "pairedWith": "rule-dark"
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (Dark)",
+        "canonical": "#2C2E33",
+        "source": "Theme.rule",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 268.4)",
+          "oklch(26.4% 0.009 268.4)",
+          "oklch(37.9% 0.009 268.4)",
+          "oklch(49.3% 0.009 268.4)",
+          "oklch(60.7% 0.009 268.4)",
+          "oklch(72.1% 0.009 268.4)",
+          "oklch(83.6% 0.009 268.4)",
+          "oklch(95.0% 0.009 268.4)"
+        ],
+        "pairedWith": "rule"
+      },
+      "rule-contrast": {
+        "role": "neutral",
+        "displayName": "Hairline (Increase Contrast)",
+        "canonical": "#8A8E96",
+        "source": "Theme.rule",
+        "appearance": "increase-contrast light",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 264.5)",
+          "oklch(26.4% 0.013 264.5)",
+          "oklch(37.9% 0.013 264.5)",
+          "oklch(49.3% 0.013 264.5)",
+          "oklch(60.7% 0.013 264.5)",
+          "oklch(72.1% 0.013 264.5)",
+          "oklch(83.6% 0.013 264.5)",
+          "oklch(95.0% 0.013 264.5)"
+        ],
+        "pairedWith": "rule-contrast-dark"
+      },
+      "rule-contrast-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (Increase Contrast, Dark)",
+        "canonical": "#6E727A",
+        "source": "Theme.rule",
+        "appearance": "increase-contrast dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 264.5)",
+          "oklch(26.4% 0.013 264.5)",
+          "oklch(37.9% 0.013 264.5)",
+          "oklch(49.3% 0.013 264.5)",
+          "oklch(60.7% 0.013 264.5)",
+          "oklch(72.1% 0.013 264.5)",
+          "oklch(83.6% 0.013 264.5)",
+          "oklch(95.0% 0.013 264.5)"
+        ],
+        "pairedWith": "rule-contrast"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Heavy Rule",
+        "canonical": "#141518",
+        "source": "Theme.ruleStrong",
+        "appearance": "light",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ],
+        "pairedWith": "rule-strong-dark"
+      },
+      "rule-strong-dark": {
+        "role": "neutral",
+        "displayName": "Heavy Rule (Dark)",
+        "canonical": "#D9DBDF",
+        "source": "Theme.ruleStrong",
+        "appearance": "dark",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 264.5)",
+          "oklch(26.4% 0.006 264.5)",
+          "oklch(37.9% 0.006 264.5)",
+          "oklch(49.3% 0.006 264.5)",
+          "oklch(60.7% 0.006 264.5)",
+          "oklch(72.1% 0.006 264.5)",
+          "oklch(83.6% 0.006 264.5)",
+          "oklch(95.0% 0.006 264.5)"
+        ],
+        "pairedWith": "rule-strong"
+      },
+      "pill": {
+        "role": "neutral",
+        "displayName": "Pill Graphite",
+        "canonical": "#141518",
+        "source": "Theme.pill",
+        "appearance": "both",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 271.1)",
+          "oklch(26.4% 0.006 271.1)",
+          "oklch(37.9% 0.006 271.1)",
+          "oklch(49.3% 0.006 271.1)",
+          "oklch(60.7% 0.006 271.1)",
+          "oklch(72.1% 0.006 271.1)",
+          "oklch(83.6% 0.006 271.1)",
+          "oklch(95.0% 0.006 271.1)"
+        ]
+      },
+      "on-pill": {
+        "role": "neutral",
+        "displayName": "On Pill",
+        "canonical": "#FFFFFF",
+        "source": "SwiftUI .white in DictationPillView",
+        "appearance": "both",
+        "tonalRamp": [
+          "oklch(15.0% 0 0)",
+          "oklch(26.4% 0 0)",
+          "oklch(37.9% 0 0)",
+          "oklch(49.3% 0 0)",
+          "oklch(60.7% 0 0)",
+          "oklch(72.1% 0 0)",
+          "oklch(83.6% 0 0)",
+          "oklch(95.0% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "time-large": {
+        "displayName": "Time Large",
+        "purpose": "Start times in the 104 pt time column on Home, Meetings, Dictations, search results; onboarding step numbers.",
+        "swiftUI": "Theme.timeLarge = .system(size: 20, weight: .semibold).monospacedDigit()",
+        "css": "font-variant-numeric: tabular-nums"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings and the editable meeting title.",
+        "swiftUI": "Theme.title = .system(size: 22, weight: .bold)"
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Status and empty-state headings, summary section heads, sheet and onboarding step titles.",
+        "swiftUI": "Theme.section = .system(size: 17, weight: .bold)"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Row text, details, explanations, transcript paragraphs (+3 pt line spacing, max 720 pt).",
+        "swiftUI": "Theme.body = .system(size: 14)"
+      },
+      "body-emphasis": {
+        "displayName": "Body Emphasis",
+        "purpose": "Meeting titles in rows, Home action titles, Ask questions, summary labels.",
+        "swiftUI": "Theme.bodyEmphasis = .system(size: 14, weight: .medium)"
+      },
+      "state": {
+        "displayName": "State",
+        "purpose": "The five fixed state words in the State column.",
+        "swiftUI": "Theme.state = .system(size: 14, weight: .semibold).width(.condensed)",
+        "css": "font-stretch: condensed"
+      },
+      "time-row": {
+        "displayName": "Time Row",
+        "purpose": "Transcript and search-moment times, player clock, menu-bar times.",
+        "swiftUI": "Theme.timeRow = .system(size: 13, weight: .semibold).monospacedDigit()",
+        "css": "font-variant-numeric: tabular-nums"
+      },
+      "speaker": {
+        "displayName": "Speaker",
+        "purpose": "Speaker names in transcript rows and search moments.",
+        "swiftUI": ".system(size: 13, weight: .semibold) (inline in TranscriptView and MomentRows; not yet a Theme token)"
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Subtitles, speaker lists, dates under times, the now-line caption, panel detail.",
+        "swiftUI": "Theme.caption = .system(size: 12)"
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Pill buttons in floating panels.",
+        "swiftUI": "PillButtonStyle: .callout.weight(.semibold) (12 pt on macOS)"
+      },
+      "column-head": {
+        "displayName": "Column Head",
+        "purpose": "Time, Source, Meeting, Length, State.",
+        "swiftUI": "Theme.columnHead = .system(size: 11, weight: .semibold).width(.condensed)",
+        "css": "font-stretch: condensed"
+      },
+      "now-tab": {
+        "displayName": "Now Tab",
+        "purpose": "The time on the now-line's red tab.",
+        "swiftUI": "NowLine: .system(size: 11, weight: .bold).monospacedDigit()",
+        "css": "font-variant-numeric: tabular-nums"
+      },
+      "time-period": {
+        "displayName": "Time Period",
+        "purpose": "AM/PM after a large time, Secondary Ink, 3 pt after the figures.",
+        "swiftUI": "TimetableTime: .system(size: 11, weight: .semibold)"
+      }
+    },
+    "shadows": [
+      {
+        "name": "window-shadow",
+        "value": "system NSPanel shadow (hasShadow = true)",
+        "purpose": "Floating panels only: call prompt, recording indicator, dictation pill."
+      },
+      {
+        "name": "transient-notice",
+        "value": "0 4px 20px rgba(0,0,0,0.12)",
+        "canonical": ".shadow(color: .black.opacity(0.12), radius: 10, y: 4)",
+        "purpose": "The saved-export notice capsule, the only lift inside the main window. CSS value is an approximation of the SwiftUI shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "travel",
+        "value": "180ms cubic-bezier(0, 0, 0.58, 1)",
+        "canonical": "Theme.travel = .easeOut(duration: 0.18), nil under Reduce Motion",
+        "purpose": "Movement: the now-line travelling through a transcript paragraph, follow-along scrolling, stepping between search matches. Under Reduce Motion it updates in place."
+      },
+      {
+        "name": "quick",
+        "value": "180ms cubic-bezier(0, 0, 0.58, 1)",
+        "canonical": "Theme.quick = .easeOut(duration: 0.18), kept under Reduce Motion",
+        "purpose": "State changes and appearances as a crossfade. Declared in Theme.swift; the shipped build has no call sites yet."
+      },
+      {
+        "name": "pulse",
+        "value": "800ms ease-in-out infinite alternate (opacity 0.35 to 1)",
+        "canonical": "PulsingDot: .easeInOut(duration: 0.8).repeatForever(autoreverses: true)",
+        "purpose": "The recording dot in the recording indicator and menu bar. Steady under Reduce Motion."
+      },
+      {
+        "name": "meter",
+        "value": "100ms linear",
+        "canonical": "LevelBar: .linear(duration: 0.1)",
+        "purpose": "Level meters. Off under Reduce Motion."
+      },
+      {
+        "name": "waveform",
+        "value": "60ms linear",
+        "canonical": "Waveform: .linear(duration: 0.06)",
+        "purpose": "Dictation pill waveform bars. Off under Reduce Motion."
+      },
+      {
+        "name": "fade",
+        "value": "opacity transition",
+        "canonical": ".transition(.opacity)",
+        "purpose": "The saved-export notice appears and leaves by fading; it dismisses itself after 6 s."
+      }
+    ],
+    "layout": [
+      {
+        "name": "sidebar",
+        "value": "230pt min / 260pt ideal / 360pt max",
+        "purpose": "Native split-view sidebar."
+      },
+      {
+        "name": "content-max",
+        "value": "1080pt",
+        "purpose": "Detail content cap, left-aligned, with 40 pt gutters."
+      },
+      {
+        "name": "timetable-columns",
+        "value": "104pt time / 170pt source or speaker / flexible meeting / 96pt length / 150pt state",
+        "purpose": "The one armature shared by every table and transcript."
+      },
+      {
+        "name": "sidebar-time",
+        "value": "64pt",
+        "purpose": "Tabular time column in sidebar meeting rows."
+      },
+      {
+        "name": "call-prompt",
+        "value": "350pt wide, 14pt padding, top-right, 10pt from screen edge, 8pt between stacked panels",
+        "purpose": "Floating call-detected prompt and recording indicator."
+      },
+      {
+        "name": "dictation-pill",
+        "value": "340 x 44pt panel, 38pt capsule, 12pt above the Dock",
+        "purpose": "Dictation pill on the screen under the pointer."
+      },
+      {
+        "name": "menu-bar-panel",
+        "value": "330pt wide, 14pt padding",
+        "purpose": "Menu-bar extra."
+      },
+      {
+        "name": "settings",
+        "value": "640 x 500pt",
+        "purpose": "Native tabbed Settings form."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Record Button",
+      "kind": "button",
+      "refersTo": "button-record",
+      "description": "Signal-red capsule for starting a recording from a floating panel, which never becomes key. Pressed drops the fill to 70%.",
+      "html": "<button class=\"ds-btn-record\"><svg class=\"ds-rec-icon\" viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"currentColor\"/><circle class=\"ds-rec-icon-core\" cx=\"8\" cy=\"8\" r=\"3.2\"/></svg>Record</button>",
+      "css": ".ds-btn-record { --ds-signal: #D91F17; --ds-on: #FFFFFF; display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1.25 -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ds-on); background: var(--ds-signal); border: 0; border-radius: 9999px; padding: 5px 12px; cursor: pointer; } .ds-btn-record .ds-rec-icon-core { fill: var(--ds-signal); } .ds-btn-record:active { background: color-mix(in srgb, var(--ds-signal) 70%, transparent); } .ds-btn-record:focus-visible { outline: 2px solid var(--ds-signal); outline-offset: 2px; } @media (prefers-color-scheme: dark) { .ds-btn-record { --ds-signal: #FF5A50; --ds-on: #141518; } }"
+    },
+    {
+      "name": "Quiet Pill Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "The Not now button beside Record: a hairline-coloured capsule with ink text, the cancel action.",
+      "html": "<button class=\"ds-btn-quiet\">Not now</button>",
+      "css": ".ds-btn-quiet { --ds-fill: #E5E7EB; --ds-ink: #141518; font: 600 12px/1.25 -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ds-ink); background: var(--ds-fill); border: 0; border-radius: 9999px; padding: 5px 12px; cursor: pointer; } .ds-btn-quiet:active { background: color-mix(in srgb, var(--ds-fill) 70%, transparent); } .ds-btn-quiet:focus-visible { outline: 2px solid var(--ds-ink); outline-offset: 2px; } @media (prefers-color-scheme: dark) { .ds-btn-quiet { --ds-fill: #2C2E33; --ds-ink: #F1F2F4; } }"
+    },
+    {
+      "name": "Timetable",
+      "kind": "custom",
+      "refersTo": "timetable-row",
+      "description": "The signature table: condensed column heads over a 2 pt ink rule, rows on the 104 pt time column, hairline under each row, raised stock on hover.",
+      "html": "<div class=\"ds-tt\"><div class=\"ds-tt-head\"><span>Time</span><span>Source</span><span>Meeting</span><span>Length</span><span>State</span></div><div class=\"ds-tt-row\" tabindex=\"0\"><span class=\"ds-tt-time\">9:30<small>AM</small></span><span class=\"ds-tt-src\"><i class=\"ds-dot ds-app-zoom\"></i>Zoom</span><span class=\"ds-tt-mtg\"><b>Weekly team sync</b><em>Me, Speaker 1, Speaker 2</em></span><span class=\"ds-tt-len\">28 min</span><span class=\"ds-tt-state ds-ready\">Ready</span></div><div class=\"ds-tt-row\" tabindex=\"0\"><span class=\"ds-tt-time\">11:00<small>AM</small></span><span class=\"ds-tt-src\"><i class=\"ds-dot ds-app-teams\"></i>Microsoft Teams</span><span class=\"ds-tt-mtg\"><b>Roadmap review</b><em>Me, Speaker 1</em></span><span class=\"ds-tt-len\">46 min</span><span class=\"ds-tt-state ds-working\">Transcribing<span class=\"ds-tt-bar\"><span style=\"width:62%\"></span></span><em>Call audio · 62%</em></span></div><div class=\"ds-tt-row\" tabindex=\"0\"><span class=\"ds-tt-time ds-live\">2:30<small>PM</small></span><span class=\"ds-tt-src\"><i class=\"ds-dot ds-app-browser\"></i>Google Chrome</span><span class=\"ds-tt-mtg\"><b>Design check-in</b></span><span class=\"ds-tt-len ds-live\">12:41</span><span class=\"ds-tt-state ds-live\"><svg class=\"ds-rec-icon\" viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"currentColor\"/><circle class=\"ds-rec-icon-core\" cx=\"8\" cy=\"8\" r=\"3.2\"/></svg>Recording</span></div></div>",
+      "css": ".ds-tt { --ink: #141518; --ink2: #50545C; --rule: #E5E7EB; --rule-strong: #141518; --raised: #F6F7F9; --signal: #D91F17; --ready: #0B7A48; --working: #1C66C4; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ink); max-width: 1080px; } .ds-tt-head, .ds-tt-row { display: grid; grid-template-columns: 104px 170px minmax(0, 1fr) 96px 150px; align-items: baseline; } .ds-tt-head { font-size: 11px; font-weight: 600; font-stretch: condensed; color: var(--ink2); padding-bottom: 6px; border-bottom: 2px solid var(--rule-strong); } .ds-tt-row { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 14px; cursor: pointer; transition: background-color 180ms cubic-bezier(0, 0, 0.58, 1); } .ds-tt-row:hover { background: var(--raised); } .ds-tt-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; } .ds-tt-time { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; } .ds-tt-time small { font-size: 11px; font-weight: 600; color: var(--ink2); margin-left: 3px; } .ds-tt-src { display: flex; align-items: center; gap: 7px; white-space: nowrap; overflow: hidden; } .ds-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex: none; } .ds-app-zoom { background: #2D72E8; } .ds-app-teams { background: #5059C9; } .ds-app-browser { background: #00897B; } .ds-tt-mtg { padding-right: 12px; display: flex; flex-direction: column; gap: 2px; } .ds-tt-mtg b { font-weight: 500; } .ds-tt-mtg em, .ds-tt-state em { font-style: normal; font-size: 12px; color: var(--ink2); } .ds-tt-len { color: var(--ink2); font-variant-numeric: tabular-nums; } .ds-tt-state { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; font-weight: 600; font-stretch: condensed; } .ds-tt-state.ds-live { flex-direction: row; align-items: center; gap: 4px; } .ds-tt-bar { display: block; width: 120px; height: 3px; border-radius: 9999px; background: var(--rule); overflow: hidden; } .ds-tt-bar span { display: block; height: 100%; border-radius: 9999px; background: var(--working); } .ds-ready { color: var(--ready); } .ds-working { color: var(--working); } .ds-live { color: var(--signal); } .ds-tt .ds-rec-icon-core { fill: #FFFFFF; } @media (prefers-color-scheme: dark) { .ds-tt { --ink: #F1F2F4; --ink2: #A9ADB5; --rule: #2C2E33; --rule-strong: #D9DBDF; --raised: #1C1D21; --signal: #FF5A50; --ready: #3CCB86; --working: #5AA2FF; } .ds-tt .ds-rec-icon-core { fill: #141518; } .ds-app-zoom { background: #5C97FF; } .ds-app-teams { background: #8C93F0; } .ds-app-browser { background: #3CC4B4; } } @media (prefers-reduced-motion: reduce) { .ds-tt-row { transition: none; } }"
+    },
+    {
+      "name": "Now-Line",
+      "kind": "custom",
+      "refersTo": "now-line-tab",
+      "description": "The signature: a 2 pt signal-red rule with the current time on a red tab, dividing what is done from what is next, captioned with the next call.",
+      "html": "<div class=\"ds-now\" role=\"separator\" aria-label=\"Now, 1:00 PM\"><span class=\"ds-now-tab\">1:00 PM</span><span class=\"ds-now-rule\"></span><span class=\"ds-now-caption\">Next: Design review, in 25 min</span></div>",
+      "css": ".ds-now { --signal: #D91F17; --on: #FFFFFF; --ink2: #50545C; display: flex; align-items: center; padding: 6px 0; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; } .ds-now-tab { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--on); background: var(--signal); border-radius: 3px; padding: 1px 6px; white-space: nowrap; } .ds-now-rule { flex: 1; height: 2px; background: var(--signal); } .ds-now-caption { margin-left: 12px; font-size: 12px; color: var(--ink2); white-space: nowrap; } @media (prefers-color-scheme: dark) { .ds-now { --signal: #FF5A50; --on: #141518; --ink2: #A9ADB5; } }"
+    },
+    {
+      "name": "State Words",
+      "kind": "chip",
+      "refersTo": "state-ready",
+      "description": "The fixed state vocabulary: five condensed semibold words with fixed colours. Words in a column, never pills or badges.",
+      "html": "<div class=\"ds-states\"><span class=\"ds-st ds-st-rec\"><svg class=\"ds-rec-icon\" viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"currentColor\"/><circle class=\"ds-rec-icon-core\" cx=\"8\" cy=\"8\" r=\"3.2\"/></svg>Recording</span><span class=\"ds-st ds-st-wait\">Waiting</span><span class=\"ds-st ds-st-work\">Transcribing</span><span class=\"ds-st ds-st-fail\">Failed</span><span class=\"ds-st ds-st-ready\">Ready</span></div>",
+      "css": ".ds-states { --signal: #D91F17; --ink3: #6B6F76; --working: #1C66C4; --caution: #9A5C00; --ready: #0B7A48; --ground: #FFFFFF; display: flex; gap: 24px; flex-wrap: wrap; font: 600 14px/1.3 -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; font-stretch: condensed; } .ds-st { display: inline-flex; align-items: center; gap: 4px; } .ds-st-rec { color: var(--signal); } .ds-st-rec .ds-rec-icon-core { fill: var(--ground); } .ds-st-wait { color: var(--ink3); } .ds-st-work { color: var(--working); } .ds-st-fail { color: var(--caution); } .ds-st-ready { color: var(--ready); } @media (prefers-color-scheme: dark) { .ds-states { --signal: #FF5A50; --ink3: #8A8E97; --working: #5AA2FF; --caution: #F2A93B; --ready: #3CCB86; --ground: #141518; } }"
+    },
+    {
+      "name": "Transcript Row",
+      "kind": "custom",
+      "refersTo": "transcript-time",
+      "description": "Transcript rows on the shared armature. The now-line rides inside the time column through the paragraph being played, and the spoken word lights in signal red.",
+      "html": "<div class=\"ds-tr\"><div class=\"ds-tr-row\"><button class=\"ds-tr-time\">0:13</button><span class=\"ds-tr-spk\"><i class=\"ds-dot ds-l2\"></i>Speaker 2</span><p class=\"ds-tr-text\">On my side, the migration is about <mark class=\"ds-tr-match\">80%</mark> complete.</p></div><div class=\"ds-tr-row ds-tr-current\"><button class=\"ds-tr-time\" aria-label=\"Play from 0:21\">0:21</button><span class=\"ds-tr-now\" style=\"top: 40%\"><span class=\"ds-tr-now-tab\">0:21</span><span class=\"ds-tr-now-rule\"></span></span><span class=\"ds-tr-spk\"><i class=\"ds-dot ds-l1\"></i>Speaker 1</span><p class=\"ds-tr-text\">When do you expect <span class=\"ds-tr-lit\">the</span> migration to finish?</p></div><div class=\"ds-tr-row\"><button class=\"ds-tr-time\">0:28</button><span class=\"ds-tr-spk\"><i class=\"ds-dot ds-me\"></i>Me</span><p class=\"ds-tr-text\">Can you send me a short status note by Friday?</p></div></div>",
+      "css": ".ds-tr { --ink: #141518; --ink2: #50545C; --rule: #E5E7EB; --rule-strong: #141518; --signal: #D91F17; --wash: rgba(217,31,23,0.10); --on: #FFFFFF; --search: rgba(242,169,59,0.32); --l1: #1C66C4; --l2: #0F8A52; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ink); border-top: 2px solid var(--rule-strong); max-width: 1080px; } .ds-tr-row { position: relative; display: grid; grid-template-columns: 104px 170px minmax(0, 720px); align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--rule); } .ds-tr-time { all: unset; cursor: pointer; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink2); min-height: 22px; } .ds-tr-time:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } .ds-tr-current .ds-tr-time { opacity: 0; } .ds-tr-now { position: absolute; left: 0; width: 90px; display: flex; align-items: center; transition: top 180ms cubic-bezier(0, 0, 0.58, 1); pointer-events: none; } .ds-tr-now-tab { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--on); background: var(--signal); border-radius: 3px; padding: 1px 6px; } .ds-tr-now-rule { flex: 1; height: 2px; background: var(--signal); } .ds-tr-spk { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; } .ds-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex: none; } .ds-l1 { background: var(--l1); } .ds-l2 { background: var(--l2); } .ds-dot.ds-me { background: var(--ink); } .ds-tr-text { margin: 0; font-size: 14px; line-height: 1.45; } .ds-tr-lit { color: var(--signal); background: var(--wash); } .ds-tr-match { color: inherit; background: var(--search); } @media (prefers-color-scheme: dark) { .ds-tr { --ink: #F1F2F4; --ink2: #A9ADB5; --rule: #2C2E33; --rule-strong: #D9DBDF; --signal: #FF5A50; --wash: rgba(255,90,80,0.10); --on: #141518; --l1: #5AA2FF; --l2: #3CCB86; } } @media (prefers-reduced-motion: reduce) { .ds-tr-now { transition: none; } }"
+    },
+    {
+      "name": "Call Prompt",
+      "kind": "card",
+      "refersTo": "call-prompt",
+      "description": "The floating call-detected panel: stock with a hairline border and 12 pt continuous corners, opened by a 2 pt ink rule. The only rounded container in the system, and it lives outside the window.",
+      "html": "<div class=\"ds-prompt\" role=\"dialog\" aria-label=\"Call detected\"><div class=\"ds-prompt-rule\"></div><div class=\"ds-prompt-body\"><svg class=\"ds-prompt-icon\" viewBox=\"0 0 34 34\" width=\"34\" height=\"34\" aria-hidden=\"true\"><circle cx=\"17\" cy=\"17\" r=\"17\" fill=\"#2D72E8\"/><path fill=\"#FFFFFF\" d=\"M13.2 10.5c.4 0 .8.3.9.7l.8 2.6c.1.4 0 .8-.3 1.1l-1.2 1.1c.9 1.8 2.3 3.2 4.1 4.1l1.1-1.2c.3-.3.7-.4 1.1-.3l2.6.8c.4.1.7.5.7.9v2.4c0 .6-.5 1.1-1.1 1.1-6.3 0-11.5-5.2-11.5-11.5 0-.6.5-1.1 1.1-1.1z\"/></svg><div class=\"ds-prompt-text\"><strong>Zoom call detected</strong><p>Record and transcribe this call? It stays on this Mac. Let others know you’re recording.</p><div class=\"ds-prompt-actions\"><button class=\"ds-p-rec\"><svg class=\"ds-rec-icon\" viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"currentColor\"/><circle class=\"ds-rec-icon-core\" cx=\"8\" cy=\"8\" r=\"3.2\"/></svg>Record</button><button class=\"ds-p-quiet\">Not now</button><button class=\"ds-p-more\" aria-label=\"More options\"><svg viewBox=\"0 0 16 4\" width=\"16\" height=\"4\" aria-hidden=\"true\"><circle cx=\"2\" cy=\"2\" r=\"1.6\" fill=\"currentColor\"/><circle cx=\"8\" cy=\"2\" r=\"1.6\" fill=\"currentColor\"/><circle cx=\"14\" cy=\"2\" r=\"1.6\" fill=\"currentColor\"/></svg></button></div></div></div></div>",
+      "css": ".ds-prompt { --ground: #FFFFFF; --ink: #141518; --ink2: #50545C; --rule: #E5E7EB; --rule-strong: #141518; --signal: #D91F17; --on: #FFFFFF; width: 350px; box-sizing: border-box; padding: 14px; background: var(--ground); border: 1px solid var(--rule); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ink); } .ds-prompt-rule { height: 2px; background: var(--rule-strong); margin-bottom: 10px; } .ds-prompt-body { display: flex; gap: 12px; align-items: flex-start; } .ds-prompt-icon { flex: none; } .ds-prompt-text strong { display: block; font-size: 14px; font-weight: 600; } .ds-prompt-text p { margin: 3px 0 0; font-size: 12px; line-height: 1.35; color: var(--ink2); } .ds-prompt-actions { display: flex; align-items: center; gap: 8px; padding-top: 8px; margin-top: 3px; } .ds-p-rec, .ds-p-quiet { display: inline-flex; align-items: center; gap: 6px; font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.25; border: 0; border-radius: 9999px; padding: 5px 12px; cursor: pointer; } .ds-p-rec { background: var(--signal); color: var(--on); } .ds-p-rec .ds-rec-icon-core { fill: var(--signal); } .ds-p-quiet { background: var(--rule); color: var(--ink); } .ds-p-rec:active, .ds-p-quiet:active { opacity: 0.7; } .ds-p-rec:focus-visible, .ds-p-quiet:focus-visible, .ds-p-more:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } .ds-p-more { all: unset; margin-left: auto; color: var(--ink2); cursor: pointer; padding: 4px; } @media (prefers-color-scheme: dark) { .ds-prompt { --ground: #141518; --ink: #F1F2F4; --ink2: #A9ADB5; --rule: #2C2E33; --rule-strong: #D9DBDF; --signal: #FF5A50; --on: #141518; } }"
+    },
+    {
+      "name": "Recording Indicator",
+      "kind": "custom",
+      "refersTo": "recording-hud",
+      "description": "Floating capsule in the top-right during a call: pulsing signal dot, red tabular clock over the app name, two level meters, and a stop control.",
+      "html": "<div class=\"ds-hud\"><span class=\"ds-hud-dot\" aria-hidden=\"true\"></span><span class=\"ds-hud-text\"><span class=\"ds-hud-clock\">12:41</span><span class=\"ds-hud-app\">Zoom</span></span><span class=\"ds-hud-meter\" title=\"Your microphone\"><span style=\"height:55%\"></span></span><span class=\"ds-hud-meter\" title=\"Call audio\"><span style=\"height:35%\"></span></span><button class=\"ds-hud-stop\" aria-label=\"Stop and transcribe\"><svg viewBox=\"0 0 12 12\" width=\"12\" height=\"12\" aria-hidden=\"true\"><rect x=\"1\" y=\"1\" width=\"10\" height=\"10\" rx=\"1.5\" fill=\"currentColor\"/></svg></button></div>",
+      "css": ".ds-hud { --ground: #FFFFFF; --ink: #141518; --ink2: #50545C; --rule: #E5E7EB; --signal: #D91F17; --ready: #0B7A48; --track: rgba(0,0,0,0.10); display: inline-flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--ground); border: 1px solid var(--rule); border-radius: 9999px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; } .ds-hud-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--signal); animation: ds-hud-pulse 800ms ease-in-out infinite alternate; } @keyframes ds-hud-pulse { from { opacity: 1; } to { opacity: 0.35; } } .ds-hud-text { display: flex; flex-direction: column; width: 150px; } .ds-hud-clock { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--signal); } .ds-hud-app { font-size: 12px; color: var(--ink2); } .ds-hud-meter { position: relative; width: 5px; height: 22px; border-radius: 9999px; background: var(--track); overflow: hidden; } .ds-hud-meter span { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 9999px; background: var(--ready); transition: height 100ms linear; } .ds-hud-stop { all: unset; color: var(--ink); cursor: pointer; padding: 2px; } .ds-hud-stop:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; } @media (prefers-color-scheme: dark) { .ds-hud { --ground: #141518; --ink: #F1F2F4; --ink2: #A9ADB5; --rule: #2C2E33; --signal: #FF5A50; --ready: #3CCB86; --track: rgba(255,255,255,0.12); } } @media (prefers-reduced-motion: reduce) { .ds-hud-dot { animation: none; } .ds-hud-meter span { transition: none; } }"
+    },
+    {
+      "name": "Dictation Pill",
+      "kind": "custom",
+      "refersTo": "dictation-pill",
+      "description": "Always-dark capsule above the Dock while dictating: listening dot and live waveform. It never takes focus or clicks.",
+      "html": "<div class=\"ds-pill\" role=\"status\" aria-label=\"Hootnote is listening\"><span class=\"ds-pill-dot\"></span><span class=\"ds-pill-wave\" aria-hidden=\"true\"><i style=\"height:8px\"></i><i style=\"height:12px\"></i><i style=\"height:18px\"></i><i style=\"height:10px\"></i><i style=\"height:22px\"></i><i style=\"height:16px\"></i><i style=\"height:24px\"></i><i style=\"height:14px\"></i><i style=\"height:9px\"></i><i style=\"height:20px\"></i><i style=\"height:13px\"></i><i style=\"height:6px\"></i><i style=\"height:17px\"></i><i style=\"height:21px\"></i><i style=\"height:11px\"></i><i style=\"height:15px\"></i><i style=\"height:7px\"></i><i style=\"height:19px\"></i><i style=\"height:12px\"></i><i style=\"height:5px\"></i></span></div>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; gap: 10px; height: 38px; box-sizing: border-box; padding: 0 16px; background: #141518; color: #FFFFFF; border: 1px solid rgba(255,255,255,0.14); border-radius: 9999px; font: 500 12px/1 -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; } .ds-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: #FF5A50; } .ds-pill-wave { display: flex; align-items: center; gap: 2px; height: 24px; } .ds-pill-wave i { display: block; width: 3px; border-radius: 9999px; background: rgba(255,255,255,0.92); transition: height 60ms linear; } @media (prefers-reduced-motion: reduce) { .ds-pill-wave i { transition: none; } }"
+    },
+    {
+      "name": "Sidebar",
+      "kind": "nav",
+      "refersTo": "timetable-time",
+      "description": "Native macOS sidebar, approximated: Home, Meetings, Dictations, then day sections of meetings as a 64 pt tabular time and one-line title. A recording meeting's time turns signal red. Build it with the system sidebar, not this snippet.",
+      "html": "<nav class=\"ds-side\" aria-label=\"Sidebar\"><a class=\"ds-side-item ds-is-selected\" href=\"#\">Home</a><a class=\"ds-side-item\" href=\"#\">Meetings</a><a class=\"ds-side-item\" href=\"#\">Dictations</a><div class=\"ds-side-section\">Today</div><a class=\"ds-side-mtg\" href=\"#\"><span class=\"ds-side-time ds-live\">2:30 PM</span><span>Design check-in</span></a><a class=\"ds-side-mtg\" href=\"#\"><span class=\"ds-side-time\">9:30 AM</span><span>Weekly team sync</span></a></nav>",
+      "css": ".ds-side { --ink: #141518; --ink3: #6B6F76; --signal: #D91F17; --sel: rgba(0,0,0,0.08); width: 260px; padding: 8px; font: 400 13px/1.3 -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif; color: var(--ink); } .ds-side-item, .ds-side-mtg { display: flex; gap: 8px; align-items: baseline; padding: 5px 8px; border-radius: 6px; color: inherit; text-decoration: none; } .ds-side-item:hover, .ds-side-mtg:hover { background: var(--sel); } .ds-side-item.ds-is-selected { background: var(--sel); } .ds-side-item:focus-visible, .ds-side-mtg:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; } .ds-side-section { margin: 14px 8px 4px; font-size: 11px; font-weight: 600; color: var(--ink3); } .ds-side-time { flex: none; width: 64px; font-weight: 600; font-variant-numeric: tabular-nums; } .ds-side-mtg span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-live { color: var(--signal); } @media (prefers-color-scheme: dark) { .ds-side { --ink: #F1F2F4; --ink3: #8A8E97; --signal: #FF5A50; --sel: rgba(255,255,255,0.10); } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Railway Timetable",
+    "overview": "Hootnote sets a working day of calls the way a railway sets its timetable. Every meeting, dictation and transcript paragraph keeps its time in one aligned column at the left edge, and the rest of the row reads across from it. Hierarchy comes from scale and weight alone: large tabular times, condensed column heads, a 2 pt ink rule over each table and 1 pt hairlines between rows. The main window has no cards, no tinted panels and no status pills.\n\nColour is scarce and every colour has one job. Ink is the text and the interactive tint. Signal red means live: a recording, its running clock, the now-line, the word being spoken. Route-line colours appear only as small dots that tell you which app a call came from or which speaker a paragraph belongs to. Green, blue and amber belong to the state words Ready, Transcribing and Failed. White timetable stock turns graphite in Dark Mode, and every colour carries a dark value; secondary ink, tertiary ink and hairlines also carry Increase Contrast values.\n\nThe frame is native macOS: sidebar, toolbar search, segmented control, Form settings, menu-bar extra, confirmation dialogs, SF Symbols and SF Pro. The world lives in the detail pane and the floating panels. Motion is short and functional. The now-line travels and the transcript follows playback at 180 ms ease-out, and under Reduce Motion both update in place. The owl's playfulness stays in the app icon and the menu-bar glyph; the interface itself is strictly professional. The direction refused the category default of gray cards, a blue accent and pill status tags, and the build carries none of them.",
+    "keyCharacteristics": [
+      "One 104 pt time column, identical on Home, Meetings, Dictations, search results and every transcript.",
+      "Tabular figures for every time and duration.",
+      "Two rules only: 2 pt ink over each table, 1 pt hairline under each row.",
+      "Signal red reserved for what is live now; the red now-line is the signature.",
+      "Route dots (9 pt) for apps and speakers; names stay ink.",
+      "Five fixed state words in a fixed State column.",
+      "Native chrome tinted ink, with Dark Mode and Increase Contrast values throughout."
+    ],
+    "rules": [
+      {
+        "name": "The Signal Rule",
+        "body": "Signal red means live now: recording, its clock, the now-line, the word being spoken, and the buttons that start or stop a recording. It is never decoration and never an error colour; failures and warnings are Caution Amber. (Native destructive buttons in system confirmation dialogs keep their system styling.)",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Tint Rule",
+        "body": "The interactive tint is ink. There is no blue accent; blue appears only as the Transcribing state and as a route dot.",
+        "section": "colors"
+      },
+      {
+        "name": "The Route Dot Rule",
+        "body": "Route colours appear only as 9 pt dots beside an ink name. They never colour text, fills or rules.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Time Rule",
+        "body": "Every time and duration is set with tabular figures, so a column of times aligns digit for digit and a running clock never jitters.",
+        "section": "typography"
+      },
+      {
+        "name": "The Scale Contrast Rule",
+        "body": "Hierarchy comes from size and weight inside one family: 20 pt semibold times against 14 pt body, 22 pt bold headings against 11 pt condensed heads. No boxes, tints or icons stand in for hierarchy.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Armature Rule",
+        "body": "The time column is 104 pt and the source or speaker column is 170 pt on every table in the app. A new table adopts these widths; it does not set its own.",
+        "section": "layout"
+      },
+      {
+        "name": "The Rows Stay Put Rule",
+        "body": "State changes in place. Rows keep their order while being read, and hover adds Raised Stock, never movement.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Stock Rule",
+        "body": "Inside the main window everything sits flat on the stock. The only lift is the transient export notice; rows, cells and headings never carry a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Fixed Vocabulary Rule",
+        "body": "A meeting's state is one of these five words, in this colour, in this column. Never a pill, badge or icon alone.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do put every time in the 104 pt time column at the left of its row, in tabular figures: Time Large (20 pt semibold) for start times, Time Row (13 pt semibold) for offsets.",
+      "Do head every table with the 2 pt Heavy Rule and close every row with a 1 pt Hairline.",
+      "Do keep Signal Red (#D91F17 / #FF5A50) for recording, live clocks, the now-line, the spoken word and the buttons that start or stop recording.",
+      "Do mark apps and speakers with a 9 pt route dot beside an ink name; you are always the ink dot.",
+      "Do write a meeting's state as one of the five fixed words, condensed 14 pt semibold, in the State column.",
+      "Do change state in place and keep row order while the user reads; answer hover with Raised Stock.",
+      "Do move things with the travel motion (180 ms ease-out) and let them update in place under Reduce Motion.",
+      "Do use native sidebar, toolbar, search, segmented control, Form settings and confirmation dialogs, tinted ink.",
+      "Do give every new colour a Dark Mode value, and an Increase Contrast value when it is secondary text or a rule.",
+      "Do use explicitly coloured capsule buttons in floating panels, which never become key."
+    ],
+    "donts": [
+      "Don't put meetings, dictations or transcript paragraphs in cards, boxes or rounded containers; the timetable is rows and rules.",
+      "Don't introduce a blue accent or tint; the interactive tint is ink.",
+      "Don't show state as pill tags or badges; state is a word in a column.",
+      "Don't use Signal Red for errors, warnings or decoration; failures and warnings are Caution Amber.",
+      "Don't colour text, fills or rules with route colours.",
+      "Don't let the now-line cross a speaker name or a word; in a transcript it stays inside the time column.",
+      "Don't change the time column or source column width for a new screen.",
+      "Don't add shadows inside the main window; the transient export notice is the only lift.",
+      "Don't bring the owl into the interface; its playfulness lives in the app icon and the menu-bar glyph only."
+    ]
+  }
+}

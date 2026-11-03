@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Hootnote · Category standard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;font:13px/1.45 -apple-system,BlinkMacSystemFont,sans-serif;color:#111827;background:#d9dbe0}
+.win{position:absolute;inset:0;background:#fff;display:grid;grid-template-columns:240px 1fr}
+.side{background:#f9fafb;border-right:1px solid #e5e7eb;padding:14px 10px}
+.lights{display:flex;gap:8px;padding:2px 6px 18px}.lights i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+.nav a{display:block;padding:7px 10px;border-radius:7px;color:#374151;font-weight:500}.nav a.on{background:#eff6ff;color:#2563eb}
+.grp{margin:18px 10px 6px;font-size:11px;color:#9ca3af;font-weight:600}
+.it{padding:5px 10px;color:#4b5563;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:52px;display:flex;align-items:center;padding:0 32px;border-bottom:1px solid #f3f4f6}
+.bar h1{font-size:15px;font-weight:600;flex:1}
+.content{padding:32px 48px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:18px}
+.card .ic{width:36px;height:36px;border-radius:9px;background:#eff6ff;color:#2563eb;display:grid;place-items:center;font-weight:700}
+.card.p{background:#2563eb;color:#fff;border-color:#2563eb}.card.p .ic{background:#ffffff33;color:#fff}
+.card h3{margin-top:12px;font-size:14px}.card p{font-size:12px;opacity:.75;margin-top:3px}
+h2{font-size:16px;font-weight:600;margin:34px 0 10px}
+.li{display:grid;grid-template-columns:1fr 120px 90px 110px;align-items:center;padding:12px 14px;border:1px solid #f3f4f6;border-radius:10px;margin-bottom:8px}
+.li em{display:block;font-style:normal;color:#6b7280;font-size:12px}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;background:#ecfdf5;color:#047857;justify-self:start}
+.tag.r{background:#fef2f2;color:#b91c1c}.tag.b{background:#eff6ff;color:#1d4ed8}
+.mut{color:#6b7280}
+</style></head><body><div class="win">
+<aside class="side"><div class="lights"><i></i><i></i><i></i></div>
+ <nav class="nav"><a class="on">Home</a><a>Meetings</a><a>Dictations</a></nav>
+ <div class="grp">Today</div><div class="it">Client steering committee</div><div class="it">Workshop prep</div><div class="it">Hiring plan check-in</div><div class="it">Q3 roadmap review</div>
+</aside>
+<section>
+ <div class="bar"><h1>Home</h1></div>
+ <div class="content">
+  <div class="cards">
+   <div class="card p"><div class="ic">●</div><h3>Record in person</h3><p>Capture a meeting in the room</p></div>
+   <div class="card"><div class="ic">↑</div><h3>Upload audio</h3><p>Transcribe a file</p></div>
+   <div class="card"><div class="ic">fn</div><h3>Dictation</h3><p>Hold fn and speak</p></div>
+  </div>
+  <h2>Recent meetings</h2>
+  <div class="li"><div><b>Client steering committee</b><em>Microsoft Teams</em></div><span class="tag r">Recording</span><span class="mut">2:30 PM</span><span class="mut">11 min</span></div>
+  <div class="li"><div><b>Workshop prep with leadership</b><em>Google Meet</em></div><span class="tag b">Transcribing</span><span class="mut">1:00 PM</span><span class="mut">52 min</span></div>
+  <div class="li"><div><b>Hiring plan check-in</b><em>Zoom</em></div><span class="tag">Ready</span><span class="mut">10:30 AM</span><span class="mut">28 min</span></div>
+  <div class="li"><div><b>Q3 roadmap review</b><em>Microsoft Teams</em></div><span class="tag">Ready</span><span class="mut">9:00 AM</span><span class="mut">46 min</span></div>
+ </div>
+</section></div></body></html>

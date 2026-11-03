@@ -1,0 +1,16 @@
+.DS_Store
+
+# SwiftPM build output and the assembled app bundles
+.build/
+build/
+
+# Packaged copy shared with coworkers (built app + zip)
+Share/
+
+# Screenshots of the running app: they show real meetings from the library
+.impeccable/review/
+# Impeccable's live question-server state
+.impeccable/questions/
+
+# Third-party Impeccable skill (pbakaus/impeccable); reinstall from skills-lock.json
+.claude/

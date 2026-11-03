@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Hootnote · Monochrome Product</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1440px;height:900px;overflow:hidden;font:13px/1.45 -apple-system,BlinkMacSystemFont,sans-serif;color:#111;background:#d9dbe0;font-feature-settings:"tnum"}
+.win{position:absolute;inset:0;background:#fafafa;display:grid;grid-template-columns:236px 1fr}
+.side{background:#f2f2f2;border-right:1px solid #e6e6e6;padding:14px 10px}
+.lights{display:flex;gap:8px;padding:2px 6px 18px}.lights i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+.nav a{display:block;padding:6px 10px;border-radius:6px;color:#4a4a4a;font-weight:500}.nav a.on{background:#e6e6e6;color:#111}
+.grp{margin:18px 10px 6px;font-size:11px;color:#a6a6a6;font-weight:600}
+.it{padding:5px 10px;color:#4a4a4a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:52px;display:flex;align-items:center;padding:0 32px;border-bottom:1px solid #e6e6e6}
+.bar h1{font-size:15px;font-weight:600;flex:1}
+.content{padding:40px 56px;display:grid;grid-template-columns:1fr 360px;gap:48px}
+.hello{font-size:30px;font-weight:600;letter-spacing:-.02em}
+.sub{color:#6b6b6b;margin-top:6px}
+.actions{display:flex;gap:10px;margin-top:22px}
+.btn{height:36px;padding:0 16px;border-radius:8px;border:1px solid #cfcfcf;background:#fff;display:flex;align-items:center;gap:8px;font-weight:500}
+.btn.p{background:#111;border-color:#111;color:#fff}.btn.p i{width:8px;height:8px;border-radius:50%;background:#a6c23f}
+h2{font-size:12px;font-weight:600;color:#6b6b6b;margin:38px 0 8px}
+.li{display:grid;grid-template-columns:1fr 90px 90px;padding:12px 0;border-bottom:1px solid #ececec}
+.li b{font-weight:500}.li em{font-style:normal;color:#8a8a8a;display:block;font-size:12px}.li span{color:#6b6b6b;text-align:right}
+.acc{color:#6f8a12;font-weight:600}
+.panel h2{margin-top:0}
+.d{padding:12px 0;border-bottom:1px solid #ececec;color:#2a2a2a}.d em{display:block;font-style:normal;color:#a6a6a6;font-size:12px;margin-top:3px}
+</style></head><body><div class="win">
+<aside class="side"><div class="lights"><i></i><i></i><i></i></div>
+ <nav class="nav"><a class="on">Home</a><a>Meetings</a><a>Dictations</a></nav>
+ <div class="grp">Today</div><div class="it">Client steering committee</div><div class="it">Workshop prep</div><div class="it">Hiring plan check-in</div><div class="it">Q3 roadmap review</div>
+</aside>
+<section>
+ <div class="bar"><h1>Home</h1></div>
+ <div class="content">
+  <div>
+   <div class="hello">Good afternoon</div><div class="sub">Listening for calls · 4 meetings today</div>
+   <div class="actions"><div class="btn p"><i></i>Record in person</div><div class="btn">Upload audio</div><div class="btn">Hold fn to dictate</div></div>
+   <h2>Recent meetings</h2>
+   <div class="li"><div><b>Client steering committee</b><em>Microsoft Teams · You, Priya Raman, 3 others</em></div><span class="acc">Recording</span><span>11:24</span></div>
+   <div class="li"><div><b>Workshop prep with leadership</b><em>Google Meet · transcribing 62%</em></div><span>1:00 PM</span><span>52 min</span></div>
+   <div class="li"><div><b>Hiring plan check-in</b><em>Zoom · 3 action items</em></div><span>10:30 AM</span><span>28 min</span></div>
+   <div class="li"><div><b>Q3 roadmap review</b><em>Microsoft Teams · 1 action item</em></div><span>9:00 AM</span><span>46 min</span></div>
+  </div>
+  <div class="panel">
+   <h2>Recent dictations</h2>
+   <div class="d">Thanks Priya, I'll send the revised timeline before Friday's steering call.<em>Mail · 2:12 PM</em></div>
+   <div class="d">Follow up with Marcus on the two open requisitions and the interview loop.<em>Notes · 11:48 AM</em></div>
+  </div>
+ </div>
+</section></div></body></html>
