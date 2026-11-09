@@ -88,11 +88,11 @@ final class AppSettings: ObservableObject {
     @Published var autoExportMarkdown: Bool { didSet { d.set(autoExportMarkdown, forKey: "autoExportMarkdown") } }
     @Published var exportFolderPath: String { didSet { d.set(exportFolderPath, forKey: "exportFolderPath") } }
     @Published var summaryEnabled: Bool { didSet { d.set(summaryEnabled, forKey: "summaryEnabled") } }
-    @Published var ollamaURL: String { didSet { d.set(ollamaURL, forKey: "ollamaURL") } }
-    /// Local model that writes summaries after each call (runs in the background, so it must stay light).
-    @Published var summaryModel: String { didSet { d.set(summaryModel, forKey: "summaryModel") } }
-    /// Local reasoning model for "Ask about this meeting".
-    @Published var askModel: String { didSet { d.set(askModel, forKey: "askModel") } }
+    /// ChatGPT model slug for summaries and Ask; empty means the first one ChatGPT lists.
+    @Published var chatGPTModel: String { didSet { d.set(chatGPTModel, forKey: "chatGPTModel") } }
+    @Published var aiProvider: AIProvider { didSet { d.set(aiProvider.rawValue, forKey: "aiProvider") } }
+    /// Claude model ID for summaries and Ask; empty means Claude Opus 5.5.
+    @Published var claudeModel: String { didSet { d.set(claudeModel, forKey: "claudeModel") } }
     @Published var dictationEnabled: Bool { didSet { d.set(dictationEnabled, forKey: "dictationEnabled") } }
     @Published var dictationHotkey: DictationHotkey { didSet { d.set(dictationHotkey.rawValue, forKey: "dictationHotkey") } }
     @Published var useCalendar: Bool { didSet { d.set(useCalendar, forKey: "useCalendar") } }
@@ -115,9 +115,9 @@ final class AppSettings: ObservableObject {
             "autoExportMarkdown": true,
             "exportFolderPath": AppPaths.defaultExportFolder.path,
             "summaryEnabled": true,
-            "ollamaURL": "http://127.0.0.1:11434",
-            "summaryModel": "qwen3.5:9b",
-            "askModel": "qwen3.5:9b",
+            "chatGPTModel": "",
+            "aiProvider": AIProvider.chatgpt.rawValue,
+            "claudeModel": "",
             "dictationEnabled": true,
             "dictationHotkey": DictationHotkey.fn.rawValue,
             "useCalendar": false,
@@ -138,9 +138,9 @@ final class AppSettings: ObservableObject {
         autoExportMarkdown = d.bool(forKey: "autoExportMarkdown")
         exportFolderPath = d.string(forKey: "exportFolderPath") ?? AppPaths.defaultExportFolder.path
         summaryEnabled = d.bool(forKey: "summaryEnabled")
-        ollamaURL = d.string(forKey: "ollamaURL") ?? "http://127.0.0.1:11434"
-        summaryModel = d.string(forKey: "summaryModel") ?? "qwen3.5:9b"
-        askModel = d.string(forKey: "askModel") ?? "qwen3.5:9b"
+        chatGPTModel = d.string(forKey: "chatGPTModel") ?? ""
+        aiProvider = AIProvider(rawValue: d.string(forKey: "aiProvider") ?? "") ?? .chatgpt
+        claudeModel = d.string(forKey: "claudeModel") ?? ""
         dictationEnabled = d.bool(forKey: "dictationEnabled")
         dictationHotkey = DictationHotkey(rawValue: d.string(forKey: "dictationHotkey") ?? "") ?? .fn
         useCalendar = d.bool(forKey: "useCalendar")

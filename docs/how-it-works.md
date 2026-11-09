@@ -21,7 +21,7 @@ see the [README](../README.md).
    merge ─► "You" + Speaker 1…n ─► clean-up ─► voiceprint / calendar naming ─► transcript.json
    playback.m4a (both tracks levelled and mixed) + recording.m4a (stereo: ch 1 = you, ch 2 = call)
      + mic.m4a and system.m4a as recorded
-   Ollama (local LLM) ─► summary, action items; "Ask about this meeting"
+   ChatGPT or Claude ─► summary, action items; "Ask about this meeting"
 ```
 
 ## Call detection
@@ -110,8 +110,42 @@ highlighted word follows the voice, and selecting a word starts playback there.
   against ground-truth timings).
 - pyannote runs with its reference Community-1 settings (step 0.1, no minimum segment length) rather than
   FluidAudio's faster default.
-- Summaries and Ask use `qwen3.5:9b` with reasoning mode. Larger open reasoning models need more memory
-  than most Macs have; `gpt-oss:20b` (14 GB) froze an 18 GB Mac in testing.
+
+## Summaries and Ask
+
+Summaries and Ask use ChatGPT or Claude, chosen in **Settings** > **AI**. No language model runs on the
+Mac. Transcripts up to 400,000 characters are summarized in one request; longer ones are summarized in
+parts and then combined. `Hootnote --summary-test <part of a meeting title>` summarizes a meeting with the
+chosen service.
+
+### ChatGPT
+
+ChatGPT uses the person's own Plus or Pro plan through OpenAI's
+[Sign in with ChatGPT](https://developers.openai.com/siwc) flow for open-source apps that run locally.
+
+- **Sign-in:** OAuth with PKCE, opened in the default browser. The callback returns to
+  `http://127.0.0.1:1455/auth/callback`, or another free port if 1455 is taken. The first sign-in
+  registers this copy of Hootnote and returns its client ID with the code.
+- **Storage:** Tokens are kept in the Keychain (service `com.local.Hootnote.chatgpt`). Each refresh
+  replaces the refresh token, so refreshes run one at a time and are saved immediately.
+- **Requests:** `POST https://api.openai.com/v1/responses` with `store: false` and `stream: true`. The
+  model comes from `GET /v1/models` (entries with `visibility: "list"`).
+- **Work workspaces:** A ChatGPT Business or Enterprise workspace must allow the app first. A global admin
+  sets **Use ChatGPT plan** to **Allowed** for it under **External access** in the OpenAI Admin Console.
+
+### Claude
+
+Claude uses an API key from the Claude Console. Claude Max, Ultra, and Team plans include monthly API
+credits for a linked Console organization, which cover these requests.
+
+- **Storage:** The key is kept in the Keychain (service `com.local.Hootnote.claude`). Hootnote checks it
+  with `GET /v1/models` before saving it.
+- **Requests:** `POST https://api.anthropic.com/v1/messages`, streamed, with `anthropic-version:
+  2026-10-21`. The default model is `claude-opus-5-5`.
+- **Declines:** Requests to models with safety classifiers send `fallbacks: "default"` (beta
+  `server-side-fallback-2026-07-01`), so a declined request is retried on the model Anthropic
+  recommends.
+- **Ask:** Requests use prompt caching, so follow-up questions reuse the cached transcript.
 
 ## Testing with synthetic calls
 

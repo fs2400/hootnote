@@ -15,7 +15,7 @@ enum Entry {
             }
             dispatchMain()
         }
-        if args.count >= 3, ["--export", "--import-test", "--ask-test", "--aec-analyze", "--cleanup-test", "--timing-test", "--process", "--clean-up", "--rebuild-playback", "--writer-test", "--paragraph-test", "--join-test", "--pause-test", "--undo-test", "--keys-test"].contains(args[1]) {
+        if args.count >= 3, ["--export", "--import-test", "--ask-test", "--aec-analyze", "--cleanup-test", "--timing-test", "--process", "--clean-up", "--rebuild-playback", "--writer-test", "--paragraph-test", "--join-test", "--pause-test", "--undo-test", "--keys-test", "--summary-test"].contains(args[1]) {
             let arg = args[2]
             Task { @MainActor in
                 switch args[1] {
@@ -33,6 +33,7 @@ enum Entry {
                 case "--keys-test": Diagnostics.keysTest()
                 case "--join-test": await Diagnostics.joinTest(arg)
                 case "--pause-test": Diagnostics.pauseTest(URL(fileURLWithPath: arg))
+                case "--summary-test": await Diagnostics.summaryTest(arg)
                 default: await Diagnostics.askTest(arg)
                 }
                 exit(0)

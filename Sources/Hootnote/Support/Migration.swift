@@ -19,7 +19,7 @@ enum Migration {
         guard !d.bool(forKey: doneKey) else { return }
         let keys = ["userName", "detectionEnabled", "recordMode", "disabledApps", "autoRecordApps", "endGraceSeconds",
                     "transcriptionModel", "language", "customVocabulary", "voiceMatchThreshold", "autoExportMarkdown",
-                    "exportFolderPath", "summaryEnabled", "ollamaURL", "useCalendar", "showFloatingIndicator",
+                    "exportFolderPath", "summaryEnabled", "useCalendar", "showFloatingIndicator",
                     "hideDockIcon", "hasCompletedOnboarding"]
         for key in keys where d.object(forKey: key) == nil {
             if let value = CFPreferencesCopyAppValue(key as CFString, oldDomain) { d.set(value, forKey: key) }

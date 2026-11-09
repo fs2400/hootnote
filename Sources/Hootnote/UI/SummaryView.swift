@@ -6,6 +6,8 @@ struct SummaryView: View {
     @EnvironmentObject var store: MeetingStore
     @EnvironmentObject var processor: ProcessingQueue
     @EnvironmentObject var settings: AppSettings
+    @ObservedObject private var chatGPT = ChatGPTAccount.shared
+    @ObservedObject private var claude = ClaudeAccount.shared
 
     @State private var summary: MeetingSummary?
     @State private var writing = false
@@ -18,10 +20,12 @@ struct SummaryView: View {
                 if let summary {
                     SummarySections(markdown: summary.markdown)
                     HStack {
-                        Text("Written on this Mac by \(summary.model) · \(summary.createdAt.formatted(date: .abbreviated, time: .shortened))")
+                        Text("\(writtenBy(summary)) · \(summary.createdAt.formatted(date: .abbreviated, time: .shortened))")
                             .font(Theme.caption).foregroundStyle(Theme.inkTertiary)
                         Spacer()
-                        Button("Rewrite") { Task { await write() } }.disabled(writing)
+                        if ready {
+                            Button("Rewrite") { Task { await write() } }.disabled(writing)
+                        }
                     }
                     .padding(.top, 10)
                 } else if writing || processor.activeID == meeting.id {
@@ -33,11 +37,14 @@ struct SummaryView: View {
                 } else {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("No summary yet").font(Theme.section).foregroundStyle(Theme.ink)
-                        Text(settings.summaryEnabled
-                             ? (meeting.statusDetail ?? "Summaries are written by \(settings.summaryModel) through Ollama on this Mac.")
-                             : "Automatic summaries are off. You can still write one for this meeting.")
-                            .font(Theme.body).foregroundStyle(Theme.inkSecondary)
-                        Button("Write summary") { Task { await write() } }.padding(.top, 4)
+                        if ready {
+                            if let detail = meeting.statusDetail {
+                                Text(detail).font(Theme.body).foregroundStyle(Theme.inkSecondary)
+                            }
+                            Button("Write summary") { Task { await write() } }.padding(.top, 4)
+                        } else {
+                            AIConnectPrompt(message: "Connect ChatGPT or Claude to get a summary of this meeting.")
+                        }
                     }
                     .padding(.top, 16)
                 }
@@ -56,24 +63,37 @@ struct SummaryView: View {
         }
     }
 
+    private var ready: Bool { settings.aiProvider == .chatgpt ? chatGPT.isSignedIn : claude.hasKey }
+
+    private func writtenBy(_ summary: MeetingSummary) -> String {
+        switch summary.app {
+        case nil: return "Written on this Mac by \(summary.model)"
+        case "ChatGPT"?: return "Written by \(summary.model) in ChatGPT"
+        case "Claude"?: return "Written by \(summary.model)"
+        case let app?: return "Written by \(summary.model) in \(app)"
+        }
+    }
+
     private func write() async {
         writing = true
         error = nil
         await processor.summarize(meeting.id)
         summary = store.summary(for: meeting.id)
-        if summary == nil { error = store.meeting(meeting.id)?.statusDetail ?? "Couldn't reach Ollama. Is it running?" }
+        if summary == nil { error = store.meeting(meeting.id)?.statusDetail ?? "Couldn't reach \(settings.aiProvider.label). Try again." }
         processor.exportIfEnabled(meeting.id)
         writing = false
     }
 }
 
-/// "Ask about this meeting": a conversation with the local reasoning model, streamed as it thinks.
+/// "Ask about this meeting": a conversation with ChatGPT, streamed as it answers.
 struct AskView: View {
     let meeting: Meeting
     let transcript: Transcript
     @ObservedObject var session: AskSession
     @EnvironmentObject var store: MeetingStore
     @EnvironmentObject var settings: AppSettings
+    @ObservedObject private var chatGPT = ChatGPTAccount.shared
+    @ObservedObject private var claude = ClaudeAccount.shared
     @State private var question = ""
     @FocusState private var focused: Bool
 
@@ -86,15 +106,19 @@ struct AskView: View {
                         if session.turns.isEmpty {
                             VStack(alignment: .leading, spacing: 10) {
                                 Text("Ask anything about this meeting").font(Theme.section).foregroundStyle(Theme.ink)
-                                Text("Answers come from the transcript only, with timestamps, from \(settings.askModel) running on this Mac. Follow-up questions keep the context.")
-                                    .font(Theme.body).foregroundStyle(Theme.inkSecondary)
-                                    .frame(maxWidth: 560, alignment: .leading)
-                                VStack(alignment: .leading, spacing: 8) {
-                                    ForEach(starters, id: \.self) { s in
-                                        StarterButton(title: s) { send(s) }
+                                if ready {
+                                    Text("Answers come from the transcript, with timestamps. Follow-up questions keep the context.")
+                                        .font(Theme.body).foregroundStyle(Theme.inkSecondary)
+                                        .frame(maxWidth: 560, alignment: .leading)
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        ForEach(starters, id: \.self) { s in
+                                            StarterButton(title: s) { send(s) }
+                                        }
                                     }
+                                    .padding(.top, 6)
+                                } else {
+                                    AIConnectPrompt(message: "Connect ChatGPT or Claude to ask questions about this meeting.")
                                 }
-                                .padding(.top, 6)
                             }
                             .padding(.top, 16)
                         }
@@ -119,7 +143,7 @@ struct AskView: View {
                     .onSubmit { send(question) }
                 Button("Ask") { send(question) }
                     .keyboardShortcut(.defaultAction)
-                    .disabled(question.trimmingCharacters(in: .whitespaces).isEmpty || session.isAnswering)
+                    .disabled(question.trimmingCharacters(in: .whitespaces).isEmpty || session.isAnswering || !ready)
             }
             .padding(.horizontal, Theme.gutter)
             .padding(.vertical, 12)
@@ -128,6 +152,8 @@ struct AskView: View {
         }
         .onAppear { focused = true }
     }
+
+    private var ready: Bool { settings.aiProvider == .chatgpt ? chatGPT.isSignedIn : claude.hasKey }
 
     private var starters: [String] {
         ["What did we decide?", "What are my action items?", "Summarize what each person said."]
@@ -162,7 +188,6 @@ private struct StarterButton: View {
 
 private struct TurnView: View {
     let turn: AskSession.Turn
-    @State private var showReasoning = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -172,23 +197,11 @@ private struct TurnView: View {
             } else if turn.answer.isEmpty {
                 HStack(spacing: 8) {
                     ProgressView().controlSize(.small)
-                    Text(turn.reasoning.isEmpty ? "Reading the transcript" : "Reasoning")
-                        .font(Theme.body).foregroundStyle(Theme.working)
+                    Text("Reading the transcript").font(Theme.body).foregroundStyle(Theme.working)
                 }
             } else {
                 MarkdownView(text: turn.answer)
                     .help("Times in brackets jump to that moment")
-            }
-            if !turn.reasoning.isEmpty {
-                DisclosureGroup(isExpanded: $showReasoning) {
-                    Text(turn.reasoning)
-                        .font(Theme.caption)
-                        .foregroundStyle(Theme.inkTertiary)
-                        .textSelection(.enabled)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                } label: {
-                    Text("How it reasoned").font(Theme.caption).foregroundStyle(Theme.inkSecondary)
-                }
             }
         }
         .padding(.vertical, 16)

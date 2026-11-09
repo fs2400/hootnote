@@ -282,51 +282,71 @@ private struct DictationSettings: View {
 
 private struct AISettings: View {
     @EnvironmentObject var settings: AppSettings
-    @State private var models: [OllamaClient.InstalledModel] = []
-    @State private var status = "Checking Ollama…"
+    @ObservedObject private var chatGPT = ChatGPTAccount.shared
+    @ObservedObject private var claude = ClaudeAccount.shared
 
     var body: some View {
         Form {
-            Toggle("Write a summary and action items after each call", isOn: $settings.summaryEnabled)
-            modelPicker("Summary model", selection: $settings.summaryModel)
-            modelPicker("Ask model", selection: $settings.askModel)
-            Text("Both run through Ollama on this Mac, so transcripts never leave it. qwen3.5:9b with its reasoning mode is the recommended model for both. Models larger than \(ByteCountFormatter.string(fromByteCount: OllamaClient.memoryBudgetBytes, countStyle: .memory)) can't be chosen: they leave too little memory for macOS and recording, and can freeze the Mac.")
-                .font(.caption).foregroundStyle(.secondary)
-            Section("Ollama") {
-                TextField("Address", text: $settings.ollamaURL)
+            Section("Summaries and Ask") {
+                Picker("Use", selection: $settings.aiProvider) {
+                    ForEach(AIProvider.allCases) { Text($0.label).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                Toggle("Write a summary after each meeting", isOn: $settings.summaryEnabled)
+                if settings.aiProvider == .chatgpt {
+                    Picker("Model", selection: $settings.chatGPTModel) {
+                        Text("Default").tag("")
+                        ForEach(chatGPT.models) { Text($0.displayName).tag($0.slug) }
+                        if !settings.chatGPTModel.isEmpty, !chatGPT.models.contains(where: { $0.slug == settings.chatGPTModel }) {
+                            Text(settings.chatGPTModel).tag(settings.chatGPTModel)
+                        }
+                    }
+                    .disabled(!chatGPT.isSignedIn)
+                } else {
+                    Picker("Model", selection: $settings.claudeModel) {
+                        Text("Claude Opus 5.5").tag("")
+                        ForEach(claude.models.filter { $0.id != ClaudeAccount.defaultModel }) { Text($0.displayName).tag($0.id) }
+                        if !settings.claudeModel.isEmpty, !claude.models.contains(where: { $0.id == settings.claudeModel }) {
+                            Text(settings.claudeModel).tag(settings.claudeModel)
+                        }
+                    }
+                    .disabled(!claude.hasKey)
+                }
+            }
+            Section("ChatGPT") {
                 HStack {
-                    Text(status).font(.caption).foregroundStyle(.secondary)
+                    Text(chatGPT.email.map { "Signed in as \($0)" } ?? "Not signed in")
                     Spacer()
-                    Button("Refresh") { Task { await refresh() } }
+                    if chatGPT.isSignedIn {
+                        Button("Sign Out") { Task { await chatGPT.signOut() } }
+                    }
+                }
+                if chatGPT.isSignedIn {
+                    Link("Manage ChatGPT usage", destination: ChatGPTAccount.usageURL)
+                } else {
+                    ChatGPTSignInButton()
+                    Text("Requires ChatGPT Plus or Pro.").font(.caption).foregroundStyle(.secondary)
+                }
+            }
+            Section("Claude") {
+                if claude.hasKey {
+                    HStack {
+                        Text("API key saved")
+                        Spacer()
+                        Button("Remove Key") { claude.disconnect() }
+                    }
+                    Link("Check Claude API credits", destination: ClaudeAccount.billingURL)
+                } else {
+                    ClaudeKeyField()
+                    Text("Claude Max, Ultra, and Team plans include monthly API credits that cover this.")
+                        .font(.caption).foregroundStyle(.secondary)
                 }
             }
         }
         .formStyle(.grouped)
-        .task { await refresh() }
-    }
-
-    private func modelPicker(_ title: String, selection: Binding<String>) -> some View {
-        Picker(title, selection: selection) {
-            ForEach(models, id: \.name) { m in
-                let tooBig = m.size > OllamaClient.memoryBudgetBytes
-                Text("\(m.name)  ·  \(ByteCountFormatter.string(fromByteCount: m.size, countStyle: .file))\(tooBig ? "  ·  too large for this Mac" : "")")
-                    .tag(m.name)
-                    .selectionDisabled(tooBig)
-            }
-            if !models.contains(where: { $0.name == selection.wrappedValue }) {
-                Text("\(selection.wrappedValue) (not installed)").tag(selection.wrappedValue)
-            }
-        }
-    }
-
-    private func refresh() async {
-        guard let client = OllamaClient(urlString: settings.ollamaURL) else { status = "Invalid address"; return }
-        do {
-            models = try await client.installed().sorted { $0.name < $1.name }
-            status = models.isEmpty ? "Ollama is running, but no models are installed." : "Ollama is running."
-        } catch {
-            models = []
-            status = "Ollama isn't reachable. Open the Ollama app, then Refresh."
+        .task {
+            if chatGPT.isSignedIn && chatGPT.models.isEmpty { try? await chatGPT.loadModels() }
+            if claude.hasKey && claude.models.isEmpty { try? await claude.loadModels() }
         }
     }
 }

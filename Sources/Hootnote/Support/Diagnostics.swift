@@ -56,8 +56,24 @@ enum Diagnostics {
         let start = Date()
         await session.ask(question, meeting: m, transcript: t, summary: store.summary(for: m.id), settings: AppSettings.shared)
         guard let turn = session.turns.last else { return }
-        print("model: \(AppSettings.shared.askModel) · \(String(format: "%.1f", Date().timeIntervalSince(start))) s · reasoning \(turn.reasoning.count) chars")
+        print("model: \(AppSettings.shared.chatGPTModel.isEmpty ? "default" : AppSettings.shared.chatGPTModel) · \(String(format: "%.1f", Date().timeIntervalSince(start))) s")
         print(turn.error.map { "ERROR: \($0)" } ?? "answer: \(turn.answer)")
+    }
+
+    /// `Hootnote --summary-test <part of a meeting title>`: summarizes that meeting with the service chosen
+    /// in Settings › AI (ChatGPT or Claude). Set it up there first.
+    static func summaryTest(_ title: String) async {
+        let store = MeetingStore()
+        guard let m = store.meetings.first(where: { $0.title.localizedCaseInsensitiveContains(title) }),
+              let t = store.transcript(for: m.id) else { print("no meeting matches \(title)"); return }
+        do {
+            let ai = try await AIConnection.current()
+            let start = Date()
+            let notes = try await Summarizer.summarize(meeting: m, transcript: t, using: ai) { print($0) }
+            print("\(ai.app) · \(ai.modelName) · \(String(format: "%.1f", Date().timeIntervalSince(start))) s\n\(notes)")
+        } catch {
+            print("ERROR: \(error.localizedDescription)")
+        }
     }
 }
 

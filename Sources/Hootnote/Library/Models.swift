@@ -117,6 +117,8 @@ struct MeetingSummary: Codable {
     var markdown: String
     var model: String
     var createdAt: Date
+    /// Where it was written when that wasn't on this Mac ("ChatGPT").
+    var app: String? = nil
 }
 
 struct Voiceprint: Codable, Identifiable, Hashable {

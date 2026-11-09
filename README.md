@@ -1,25 +1,25 @@
 # Hootnote
 
-Hootnote is a macOS menu bar app that records your calls and transcribes them on your Mac. It detects
-when a call starts, asks whether to record, stops when the call ends, and produces a transcript with
-speaker labels, a summary, and action items. No bot joins the meeting, and no audio or text leaves your
-Mac.
+Hootnote is a macOS menu bar app that records your calls, transcribes them on your Mac, and writes a
+summary of each meeting with ChatGPT or Claude. No bot joins the meeting.
 
 ## Features
 
 - **Call detection** for Zoom, Microsoft Teams, Webex, Slack, FaceTime, and calls in a browser.
 - **Speaker labels.** Name a speaker once, and Hootnote recognizes their voice in later meetings.
 - **In-person meetings and uploads.** Record a room, or transcribe any audio or video file.
-- **Summaries and questions** answered by a local model through Ollama.
+- **Summaries and questions.** Get notes and action items for each meeting, and ask questions about it.
 - **Dictation.** Hold **fn** in any app, speak, and the text is pasted at your cursor.
 - **Export** to Word, PDF, Markdown, plain text, or subtitles.
 
-## Prerequisites
+## Before you begin
+
+You need:
 
 - macOS 14.4 or later.
-- Xcode Command Line Tools with Swift 6.1 or later. Full Xcode isn't required.
-- About 2.2 GB of free disk space for the speech models, which download the first time you open the app.
-- Optional: [Ollama](https://ollama.com), for summaries and questions.
+- Xcode Command Line Tools with Swift 6.1 or later.
+- About 2.2 GB of free disk space for the speech models.
+- For summaries and questions, a ChatGPT Plus or Pro account, or a Claude API key.
 
 ## Build and install
 
@@ -36,49 +36,45 @@ Mac.
    scripts/build_app.sh
    ```
 
-   To build without installing, add `--no-install`. The app is written to `build/Hootnote.app`.
+   To build without installing, add `--no-install`. The app is saved to `build/Hootnote.app`.
 
-3. Optional: download the model for summaries and questions:
-
-   ```bash
-   ollama pull qwen3.5:9b
-   ```
-
-> [!NOTE]
-> macOS ties Microphone and System Audio Recording permissions to the app's code signature. Set
-> `SIGN_IDENTITY` to the name of a code-signing certificate in your keychain to keep permissions across
-> rebuilds. Without one, the script signs the app ad hoc and macOS asks for permissions again after each
-> rebuild.
+**Note:** To keep macOS permissions after you rebuild, set `SIGN_IDENTITY` to the name of a
+code-signing certificate in your keychain.
 
 ## Get started
 
-1. Open Hootnote. The welcome screen asks for your name and for Microphone and System Audio Recording
-   permissions, then downloads the speech models.
-2. Join a call. When Hootnote detects it, a prompt appears in the upper-right corner. Select **Record**
-   or **Not now**. To record every call from that app without asking, select **Always record *app*
-   calls**.
-3. While Hootnote records, an indicator shows the elapsed time and audio levels. Recording stops 15
-   seconds after the call app releases the microphone. To continue recording, select **Keep**.
-4. After the call, Hootnote transcribes in the background. You can record your next call while it works.
-5. Open the meeting and select a speaker's name to rename them. Hootnote remembers their voice for later
-   meetings.
+1. Open Hootnote and follow the welcome screen.
+2. Open **Settings** > **AI**. Click **Continue with ChatGPT**, or paste a Claude API key and click
+   **Connect**.
+3. Join a call. When Hootnote asks, click **Record**.
+4. When the call ends, Hootnote transcribes it and writes a summary.
+5. Open the meeting to see the **Transcript**, **Summary**, and **Ask** tabs.
 
 ## Common tasks
 
 | Task | Steps |
 |---|---|
-| Record an in-person meeting | Select **Record in person** on Home, in the toolbar, or in the menu bar. |
-| Transcribe a file | Select **Upload audio** on Home, or drop the file on Home. |
-| Dictate into another app | Hold **fn**, speak, and release. For hands-free dictation, tap **fn** once to start and again to finish. |
-| Play from a word | Select the word in the transcript. |
-| Fix one paragraph's speaker | Right-click the paragraph and select **Change Speaker for This Paragraph**. |
-| Rejoin a call that was split in two | Open the second meeting and select **Meeting** > **Join with Previous Meeting**. |
-| Delete a meeting | Right-click the meeting and select **Delete Meeting**. It moves to the Trash. |
+| Record an in-person meeting | Click **Record in person** on Home or in the menu bar. |
+| Transcribe a file | Click **Upload audio** on Home, or drop the file on Home. |
+| Rename a speaker | Click the speaker's name in the transcript. |
+| Ask about a meeting | Open the meeting and click the **Ask** tab. |
+| Rewrite a summary | On the **Summary** tab, click **Rewrite**. |
+| Dictate into another app | Hold **fn**, speak, and release. |
+| Delete a meeting | Right-click the meeting and click **Delete Meeting**. |
 
-> [!IMPORTANT]
-> Dictation needs Accessibility permission. In **System Settings** > **Keyboard**, set **Press 🌐 key
-> to** to **Do Nothing**. To use Right Option instead of fn, go to **Settings** > **Dictation** in
-> Hootnote.
+**Note:** Dictation needs Accessibility permission. In **System Settings** > **Keyboard**, set **Press
+🌐 key to** to **Do Nothing**.
+
+## Use Claude
+
+1. On claude.ai, open **Settings** > **Billing**. On a Team plan, open **Organization settings** >
+   **Billing**.
+2. Under **API credits**, click **Link organization** and follow the steps.
+3. In the [Claude Console](https://platform.claude.com/settings/keys), create an API key.
+4. In Hootnote, open **Settings** > **AI**, paste the key under **Claude**, and click **Connect**.
+
+**Note:** Claude Max, Ultra, and Team plans include monthly API credits that cover Hootnote. Hootnote
+uses Claude Opus 5.5 unless you choose another model.
 
 ## Keyboard shortcuts
 
@@ -95,41 +91,48 @@ Mac.
 | Data | Location |
 |---|---|
 | Recordings and transcripts | `~/Library/Application Support/Hootnote/Meetings/` |
-| Dictation history (text only) | `~/Library/Application Support/Hootnote/dictations.json` |
-| A Markdown copy of each transcript | `~/Documents/Meeting Transcripts/`, which you can change in **Settings** |
+| Dictation history | `~/Library/Application Support/Hootnote/dictations.json` |
+| Markdown copies of transcripts | `~/Documents/Meeting Transcripts/` |
+
+Recording and transcription happen on your Mac. To write summaries and answer questions, Hootnote sends
+the meeting's transcript to ChatGPT or Claude.
 
 ## How it works
 
-Hootnote records your microphone and the call audio as two separate tracks. It captures call audio
-through a Core Audio process tap, so it needs no audio driver and doesn't change your sound settings.
-After the call, Hootnote:
+1. Hootnote records your microphone and the call audio as separate tracks.
+2. It removes speaker echo from your microphone track.
+3. It transcribes both tracks with OpenAI Whisper, and labels speakers with pyannote.
+4. It sends the transcript to ChatGPT or Claude for a summary.
 
-1. Removes speaker echo from your microphone track.
-2. Transcribes both tracks with OpenAI Whisper Large-v3 Turbo, then times each word with NVIDIA Parakeet.
-3. Separates the call participants by voice with pyannote Community-1.
-4. Writes a summary and action items with the Ollama model.
+For details, see [How Hootnote works](docs/how-it-works.md).
 
-For call detection, echo handling, and test results, see [How Hootnote works](docs/how-it-works.md).
+## Troubleshooting
+
+**ChatGPT says "This app needs your organization's permission."**
+
+Your ChatGPT account belongs to a work workspace that hasn't allowed Hootnote. Do one of the following:
+
+- Ask your ChatGPT workspace admin to open **External access** in the Global Admin Console, allow
+  Hootnote, and set **Use ChatGPT plan** to **Allowed**.
+- Sign in with a personal ChatGPT Plus or Pro account instead.
+
+Then, in Hootnote, click **Cancel** and **Continue with ChatGPT** again.
 
 ## Known limitations
 
-- The meeting service mixes remote participants into one stream, so Hootnote has to tell them apart by
-  voice. Overlapping speech or similar voices can be mislabeled.
-- Hootnote detects a call by checking which app is using the microphone. If your call app releases the
-  microphone when you mute, recording stops after 15 seconds. To wait longer, go to **Settings** >
-  **Recording**.
-- Hootnote doesn't load a summary model larger than about 45% of your Mac's memory, and it loads only one
-  model at a time.
-- Recording laws vary. In some places, everyone on a call must consent to being recorded.
+- Overlapping speech or similar voices can get the wrong speaker label. To fix one, right-click the
+  paragraph and click **Change Speaker for This Paragraph**.
+- If your call app releases the microphone when you mute, recording stops after 15 seconds. To wait
+  longer, open **Settings** > **Recording**.
+- Recording laws vary. In some places, everyone on a call must agree to be recorded.
 
 ## Third-party components
 
 | Purpose | Project | License |
 |---|---|---|
-| Speech recognition | [WhisperKit](https://github.com/argmaxinc/WhisperKit) 1.1.1 (OpenAI Whisper Large-v3 and Large-v3 Turbo) | MIT |
-| Speaker separation, voice detection, word timing | [FluidAudio](https://github.com/FluidInference/FluidAudio) 0.17.7 (pyannote Community-1, Silero VAD, NVIDIA Parakeet TDT 0.6B v2) | Apache 2.0; Parakeet weights CC-BY-4.0 |
-| Echo cancellation | [SpeexDSP](https://github.com/xiph/speexdsp) 1.2.1, included in `Sources/CSpeexDSP` | BSD-3 |
-| Summaries and questions | [Ollama](https://ollama.com) with qwen3.5:9b | MIT; Apache 2.0 |
+| Speech recognition | [WhisperKit](https://github.com/argmaxinc/WhisperKit) 1.1.1 (OpenAI Whisper Large-v3 Turbo) | MIT |
+| Speaker labels, voice detection, word timing | [FluidAudio](https://github.com/FluidInference/FluidAudio) 0.17.7 (pyannote Community-1, Silero VAD, NVIDIA Parakeet TDT 0.6B v2) | Apache 2.0; Parakeet weights CC-BY-4.0 |
+| Echo cancellation | [SpeexDSP](https://github.com/xiph/speexdsp) 1.2.1, in `Sources/CSpeexDSP` | BSD-3 |
 
 ## License
 

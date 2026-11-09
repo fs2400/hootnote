@@ -567,24 +567,26 @@ final class ProcessingQueue: ObservableObject {
     // MARK: - Summary / export (also used from the UI)
 
     func summarize(_ id: UUID) async {
-        guard let meeting = store.meeting(id), let transcript = store.transcript(for: id),
-              let client = OllamaClient(urlString: settings.ollamaURL) else { return }
+        guard let meeting = store.meeting(id), let transcript = store.transcript(for: id) else { return }
+        // Not set up yet: the Summary tab offers ChatGPT sign-in or a Claude key instead of an error.
+        guard AIConnection.isReady else { return }
         do {
-            let model = settings.summaryModel
             let progress: @Sendable (String) -> Void = { text in
                 Task { @MainActor [weak self] in self?.setProgress(id, text) }
             }
+            let ai = try await AIConnection.current()
+            func write() async throws -> String {
+                try await Summarizer.summarize(meeting: meeting, transcript: transcript, using: ai, progress: progress)
+            }
             let markdown: String
             do {
-                markdown = try await Summarizer.summarize(meeting: meeting, transcript: transcript, client: client,
-                                                          model: model, progress: progress)
-            } catch let error as URLError where [.timedOut, .networkConnectionLost, .cannotConnectToHost].contains(error.code) {
-                // Usually the Mac slept mid-summary; Ollama is back once it wakes, so try once more.
+                markdown = try await write()
+            } catch let error as URLError where [.timedOut, .networkConnectionLost, .notConnectedToInternet].contains(error.code) {
+                // Usually the Mac slept mid-summary; the connection is back once it wakes, so try once more.
                 try await Task.sleep(for: .seconds(5))
-                markdown = try await Summarizer.summarize(meeting: meeting, transcript: transcript, client: client,
-                                                          model: model, progress: progress)
+                markdown = try await write()
             }
-            store.saveSummary(MeetingSummary(markdown: markdown, model: model, createdAt: Date()), for: id)
+            store.saveSummary(MeetingSummary(markdown: markdown, model: ai.modelName, createdAt: Date(), app: ai.app), for: id)
             store.update(id) { $0.statusDetail = nil }
         } catch {
             log.error("Summary failed: \(error.localizedDescription)")

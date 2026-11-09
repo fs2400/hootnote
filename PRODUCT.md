@@ -18,7 +18,7 @@ Hootnote is a private, on-device meeting transcriber for macOS. It notices when 
 
 ## Positioning
 
-Nothing joins the meeting and nothing leaves the Mac. Call audio comes from a passive Core Audio tap and the user's mic is a separate track, so the user is always known and never confused with other speakers. Transcription (OpenAI Whisper Large-v3 Turbo), speaker separation (pyannote Community-1), summaries and Q&A (local models via Ollama) all run locally.
+Nothing joins the meeting. Call audio comes from a passive Core Audio tap and the user's mic is a separate track, so the user is always known and never confused with other speakers. Recording, transcription (OpenAI Whisper Large-v3 Turbo) and speaker separation (pyannote Community-1) run on the Mac. Summaries and Q&A come from ChatGPT (the user's own account, through Sign in with ChatGPT) or Claude (a Claude API key, covered by Max, Ultra, and Team plans' monthly API credits), so no language model runs locally and the laptop stays fast.
 
 ## Operating Context
 
@@ -27,14 +27,14 @@ Nothing joins the meeting and nothing leaves the Mac. Call audio comes from a pa
 - Back-to-back calls: a new call can be recorded while the previous one is still being processed.
 - Dictation: a pill above the Dock shows live audio while the fn key is held; the text is pasted into the app the user was in.
 - Exports go to clients and colleagues as Markdown, plain text, SRT, Word (.docx) and PDF, with speaker names and timestamps.
-- Client material is confidential; transcripts stay on the Mac.
+- Client material is confidential: audio stays on the Mac; only transcript text goes to ChatGPT or Claude, for summaries and Ask.
 
 ## Capabilities and Constraints
 
 - Meetings: auto-detect calls, record (mic + call audio, echo-cancelled), auto-stop, background transcription queue, speaker naming that learns voices, summaries, "Ask about this meeting", search, playback with word-level follow-along, edit text, change speaker per paragraph, delete with confirmation.
 - In-person recording and audio/video file upload (single mixed track, all speakers separated by voice).
 - Dictation history kept as text only; dictation audio is discarded.
-- Hardware: 18 GB unified memory. Local LLM: qwen3.5:9b (reasoning mode) for both summaries and Ask. gpt-oss:20b (14 GB) froze the Mac in testing and is excluded; Hootnote refuses models over ~45% of physical memory and never keeps two loaded. Frontier open models do not fit.
+- Hardware: 18 GB unified memory. No local language model: summaries and Ask use ChatGPT (Plus or Pro, through Sign in with ChatGPT) or Claude (API key).
 - Requires Microphone, System Audio Recording, Accessibility (dictation hotkey and paste) and optionally Calendar and Notifications permissions.
 
 ## Brand Commitments
