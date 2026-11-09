@@ -271,7 +271,7 @@ final class ProcessingQueue: ObservableObject {
             store.update(id) { $0.status = .ready; $0.statusDetail = nil; $0.echoNote = echoNote }
             playbackVersion[id, default: 0] += 1
 
-            if settings.summaryEnabled, !transcript.utterances.isEmpty {
+            if shouldSummarize(id), !transcript.utterances.isEmpty {
                 await summarize(id)
             }
             exportIfEnabled(id)
@@ -488,7 +488,7 @@ final class ProcessingQueue: ObservableObject {
                 AppState.shared.announce("Meetings joined: \(m.duration.durationString).")
                 Notifier.shared.post(title: "Meetings joined", body: "\(m.title) · \(m.duration.durationString)", meetingID: firstID)
             }
-            if settings.summaryEnabled, !result.transcript.utterances.isEmpty { await summarize(firstID) }
+            if shouldSummarize(firstID), !result.transcript.utterances.isEmpty { await summarize(firstID) }
             exportIfEnabled(firstID)
         } catch {
             log.error("Join failed: \(error.localizedDescription)")
@@ -566,6 +566,15 @@ final class ProcessingQueue: ObservableObject {
 
     // MARK: - Summary / export (also used from the UI)
 
+    /// Whether to write a summary once the transcript is ready: always, or when you said yes as the recording ended.
+    private func shouldSummarize(_ id: UUID) -> Bool {
+        switch settings.summaryMode {
+        case .always: return true
+        case .ask: return store.meeting(id)?.wantsSummary == true
+        case .never: return false
+        }
+    }
+
     func summarize(_ id: UUID) async {
         guard let meeting = store.meeting(id), let transcript = store.transcript(for: id) else { return }
         // Not set up yet: the Summary tab offers ChatGPT sign-in or a Claude key instead of an error.
@@ -596,7 +605,9 @@ final class ProcessingQueue: ObservableObject {
 
     func exportIfEnabled(_ id: UUID) {
         guard settings.autoExportMarkdown, let meeting = store.meeting(id), let transcript = store.transcript(for: id) else { return }
-        Exporter.autoExport(meeting: meeting, transcript: transcript, summary: store.summary(for: id), folder: settings.exportFolder)
+        // Nobody is there to ask, so the automatic copy includes the summary unless you chose never to.
+        let summary = settings.exportSummary == .exclude ? nil : store.summary(for: id)
+        _ = Exporter.autoExport(meeting: meeting, transcript: transcript, summary: summary, folder: settings.exportFolder)
     }
 }
 

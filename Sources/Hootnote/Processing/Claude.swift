@@ -13,7 +13,6 @@ final class ClaudeAccount: ObservableObject {
 
     static let defaultModel = "claude-opus-5-5"
     static let keysURL = URL(string: "https://platform.claude.com/settings/keys")!
-    static let billingURL = URL(string: "https://platform.claude.com/settings/billing")!
 
     @Published private(set) var hasKey: Bool
     @Published private(set) var models: [Model] = []
@@ -173,6 +172,10 @@ enum AIProvider: String, CaseIterable, Identifiable {
     case chatgpt, claude
     var id: String { rawValue }
     var label: String { self == .chatgpt ? "ChatGPT" : "Claude" }
+    /// Where to see how much of your ChatGPT plan, or your Claude API credits, Hootnote has used.
+    var usageURL: URL {
+        URL(string: self == .chatgpt ? "https://chatgpt.com/settings/usage" : "https://platform.claude.com/settings/billing")!
+    }
 }
 
 /// One way to reach the chosen service: the model, how to label what it writes, and how to ask it.

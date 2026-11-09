@@ -399,6 +399,7 @@ Native buttons everywhere a window is key; explicit pill buttons where it is not
 - **Record (pill):** Signal Red fill, On Signal text, 12 pt semibold, 5 pt by 12 pt padding, with the `record.circle.fill` symbol. Default action of the call prompt and the menu-bar prompt.
 - **Not now (pill):** Hairline fill, ink text, same metrics. Cancel action.
 - **Keep (pill):** Caution Amber fill, On Caution text; appears in the recording indicator only during the auto-stop countdown.
+- **Summarize (pill):** Timetable Ink fill, Timetable Stock text, same metrics. The default answer in the summary question; ink, not red, because nothing is live.
 - **Pressed:** fill drops to 70% opacity. Pill buttons exist because floating panels never become key, and the system prominent style turns gray in non-key windows.
 - **Stop and transcribe:** native bordered-prominent, tinted Signal Red, large in the live recording view and regular in the menu bar, beside a native destructive Discard….
 - **Toolbar:** native Record in person / Stop recording (Signal Red while recording) and Upload audio.
@@ -446,6 +447,10 @@ Time Row in Secondary Ink inside the 104 pt column (a button that plays from tha
 ### Recording Indicator
 A capsule on Timetable Stock with a Hairline border, 9 by 14 pt padding: a 10 pt pulsing Signal Red dot (0.8 s fade between 35% and 100%, steady under Reduce Motion), the elapsed clock in 14 pt semibold tabular Signal Red over the app name in caption, two 5 by 22 pt level meters (you and the call), Keep during the countdown, and a borderless stop symbol.
 
+### Summary Question
+Shown when a recording ends or an upload is read, while **After each meeting** is set to Ask me and ChatGPT or Claude is connected. The call prompt's panel (350 pt, 14 pt padding, 12 pt continuous corners, Hairline border, 2 pt Heavy Rule on top), stacked under the call prompt and the recording indicator: "Summarize this meeting?" in 14 pt semibold ink, the meeting title in caption Secondary Ink (two lines at most), then Summarize (ink pill) and No thanks (Hairline pill), with "With Claude" or "With ChatGPT" in caption Tertiary Ink at the trailing edge. Unanswered, it leaves after two minutes and no summary is written; the Summary tab still offers one.
+### Connect ChatGPT or Claude
+A 640 pt native sheet, offered once after the welcome screen when neither service is connected. Title (22 pt bold), one line of Secondary Ink, then the Heavy Rule and one row per service: the name in Section type inside the 104 pt time column, its explanation and controls beside it, and "Connected" as a Ready Green state word at the trailing edge once it is set up. Claude's row numbers its three steps in Time Row Secondary Ink; the Console link is underlined ink with an `arrow.up.right` symbol. Set Up Later (native) on the left, Done (prominent, ink) on the right, enabled once either service is connected.
 ### Dictation Pill
 A 38 pt Pill Graphite capsule with a 14% white border, centred above the Dock. Listening shows an 8 pt Pill Signal dot and a waveform of 3 pt white bars (3 to 24 pt tall, 2 pt apart, newest on the right); hands-free adds "Tap fn to finish" at 70% white. Transcribing, done and failed show a small symbol and a 12 pt medium message. It never takes clicks or focus.
 

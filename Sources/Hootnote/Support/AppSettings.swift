@@ -59,6 +59,32 @@ enum TranscriptionLanguage {
     ]
 }
 
+/// When Hootnote writes a summary after a meeting.
+enum SummaryMode: String, CaseIterable, Identifiable {
+    case ask, always, never
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .ask: return "Ask me"
+        case .always: return "Always summarize"
+        case .never: return "Don't summarize"
+        }
+    }
+}
+
+/// Whether exports include the meeting's summary.
+enum ExportSummaryChoice: String, CaseIterable, Identifiable {
+    case ask, include, exclude
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .ask: return "Ask each time"
+        case .include: return "Always include"
+        case .exclude: return "Never include"
+        }
+    }
+}
+
 enum DictationHotkey: String, CaseIterable, Identifiable {
     case fn, rightOption
     var id: String { rawValue }
@@ -87,7 +113,10 @@ final class AppSettings: ObservableObject {
     @Published var voiceMatchThreshold: Double { didSet { d.set(voiceMatchThreshold, forKey: "voiceMatchThreshold") } }
     @Published var autoExportMarkdown: Bool { didSet { d.set(autoExportMarkdown, forKey: "autoExportMarkdown") } }
     @Published var exportFolderPath: String { didSet { d.set(exportFolderPath, forKey: "exportFolderPath") } }
-    @Published var summaryEnabled: Bool { didSet { d.set(summaryEnabled, forKey: "summaryEnabled") } }
+    @Published var summaryMode: SummaryMode { didSet { d.set(summaryMode.rawValue, forKey: "summaryMode") } }
+    @Published var exportSummary: ExportSummaryChoice { didSet { d.set(exportSummary.rawValue, forKey: "exportSummary") } }
+    /// The ChatGPT-or-Claude setup window has been offered once; after that, set up from Settings or the Summary tab.
+    @Published var aiSetupOffered: Bool { didSet { d.set(aiSetupOffered, forKey: "aiSetupOffered") } }
     /// ChatGPT model slug for summaries and Ask; empty means the first one ChatGPT lists.
     @Published var chatGPTModel: String { didSet { d.set(chatGPTModel, forKey: "chatGPTModel") } }
     @Published var aiProvider: AIProvider { didSet { d.set(aiProvider.rawValue, forKey: "aiProvider") } }
@@ -114,7 +143,9 @@ final class AppSettings: ObservableObject {
             "voiceMatchThreshold": 0.55,
             "autoExportMarkdown": true,
             "exportFolderPath": AppPaths.defaultExportFolder.path,
-            "summaryEnabled": true,
+            "summaryMode": SummaryMode.ask.rawValue,
+            "exportSummary": ExportSummaryChoice.ask.rawValue,
+            "aiSetupOffered": false,
             "chatGPTModel": "",
             "aiProvider": AIProvider.chatgpt.rawValue,
             "claudeModel": "",
@@ -137,7 +168,9 @@ final class AppSettings: ObservableObject {
         voiceMatchThreshold = d.double(forKey: "voiceMatchThreshold")
         autoExportMarkdown = d.bool(forKey: "autoExportMarkdown")
         exportFolderPath = d.string(forKey: "exportFolderPath") ?? AppPaths.defaultExportFolder.path
-        summaryEnabled = d.bool(forKey: "summaryEnabled")
+        summaryMode = SummaryMode(rawValue: d.string(forKey: "summaryMode") ?? "") ?? .ask
+        exportSummary = ExportSummaryChoice(rawValue: d.string(forKey: "exportSummary") ?? "") ?? .ask
+        aiSetupOffered = d.bool(forKey: "aiSetupOffered")
         chatGPTModel = d.string(forKey: "chatGPTModel") ?? ""
         aiProvider = AIProvider(rawValue: d.string(forKey: "aiProvider") ?? "") ?? .chatgpt
         claudeModel = d.string(forKey: "claudeModel") ?? ""

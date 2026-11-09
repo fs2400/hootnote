@@ -114,7 +114,9 @@ highlighted word follows the voice, and selecting a word starts playback there.
 ## Summaries and Ask
 
 Summaries and Ask use ChatGPT or Claude, chosen in **Settings** > **AI**. No language model runs on the
-Mac. Transcripts up to 400,000 characters are summarized in one request; longer ones are summarized in
+Mac. By default Hootnote asks "Summarize this meeting?" when a recording ends or an upload is read, and
+writes a summary only if you say yes (`Meeting.wantsSummary`), so meetings that don't need one cost
+nothing. **After each meeting** can also be set to always or never. Transcripts up to 400,000 characters are summarized in one request; longer ones are summarized in
 parts and then combined. `Hootnote --summary-test <part of a meeting title>` summarizes a meeting with the
 chosen service.
 

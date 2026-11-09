@@ -7,11 +7,13 @@ final class FloatingPanel: NSPanel {
     override var canBecomeMain: Bool { false }
 }
 
-/// The "call detected" prompt and the recording indicator, stacked in the top-right corner.
+/// The "call detected" prompt, the recording indicator and the "Summarize this meeting?" question,
+/// stacked in the top-right corner.
 @MainActor
 final class FloatingPanels {
     private var promptPanel: FloatingPanel?
     private var hudPanel: FloatingPanel?
+    private var summaryPanel: FloatingPanel?
 
     func showPrompt<V: View>(_ view: V) {
         promptPanel?.close()
@@ -34,6 +36,18 @@ final class FloatingPanels {
     func hideHUD() {
         hudPanel?.close()
         hudPanel = nil
+        layout()
+    }
+
+    func showSummaryQuestion<V: View>(_ view: V) {
+        summaryPanel?.close()
+        summaryPanel = make(view)
+        layout()
+    }
+
+    func hideSummaryQuestion() {
+        summaryPanel?.close()
+        summaryPanel = nil
         layout()
     }
 
@@ -62,7 +76,7 @@ final class FloatingPanels {
         guard let screen = NSScreen.main else { return }
         let visible = screen.visibleFrame
         var top = visible.maxY - 10
-        for panel in [hudPanel, promptPanel].compactMap({ $0 }) {
+        for panel in [hudPanel, promptPanel, summaryPanel].compactMap({ $0 }) {
             let size = panel.frame.size
             panel.setFrameOrigin(NSPoint(x: visible.maxX - size.width - 10, y: top - size.height))
             top -= size.height + 8
@@ -123,6 +137,51 @@ struct CallPromptView: View {
         .background(Theme.ground)
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(Theme.rule))
+    }
+}
+
+// MARK: - Summarize this meeting?
+
+/// Asked when a recording ends, so summaries are written only for meetings that need one.
+struct SummaryPromptView: View {
+    @EnvironmentObject var state: AppState
+    let meetingID: UUID
+    let title: String
+    /// "ChatGPT" or "Claude": who would write it.
+    let service: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Rectangle().fill(Theme.ruleStrong).frame(height: 2)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Summarize this meeting?")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Theme.ink)
+                Text(title)
+                    .font(Theme.caption)
+                    .foregroundStyle(Theme.inkSecondary)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: 8) {
+                    Button("Summarize") { state.answerSummaryQuestion(meetingID, summarize: true) }
+                        .buttonStyle(PillButtonStyle(fill: Theme.ink, foreground: Theme.ground))
+                    Button("No thanks") { state.answerSummaryQuestion(meetingID, summarize: false) }
+                        .buttonStyle(PillButtonStyle(fill: Theme.rule, foreground: Theme.ink))
+                    Spacer(minLength: 0)
+                    Text("With \(service)")
+                        .font(Theme.caption)
+                        .foregroundStyle(Theme.inkTertiary)
+                }
+                .padding(.top, 8)
+            }
+        }
+        .padding(14)
+        .frame(width: 350)
+        .background(Theme.ground)
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(Theme.rule))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Summarize \(title)?")
     }
 }
 

@@ -25,7 +25,6 @@ final class ChatGPTAccount: ObservableObject {
     @Published private(set) var signingIn = false
 
     var isSignedIn: Bool { email != nil && planUsageGranted }
-    static let usageURL = URL(string: "https://chatgpt.com/settings/usage")!
 
     private static let issuer = "https://auth.openai.com"
     private static let authorizeURL = URL(string: "https://auth.openai.com/api/accounts/authorize")!

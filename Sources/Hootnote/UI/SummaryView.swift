@@ -24,6 +24,8 @@ struct SummaryView: View {
                             .font(Theme.caption).foregroundStyle(Theme.inkTertiary)
                         Spacer()
                         if ready {
+                            Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                                .font(Theme.caption)
                             Button("Rewrite") { Task { await write() } }.disabled(writing)
                         }
                     }
@@ -41,7 +43,12 @@ struct SummaryView: View {
                             if let detail = meeting.statusDetail {
                                 Text(detail).font(Theme.body).foregroundStyle(Theme.inkSecondary)
                             }
-                            Button("Write summary") { Task { await write() } }.padding(.top, 4)
+                            HStack(spacing: 14) {
+                                Button("Write summary") { Task { await write() } }
+                                Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                                    .font(Theme.caption)
+                            }
+                            .padding(.top, 4)
                         } else {
                             AIConnectPrompt(message: "Connect ChatGPT or Claude to get a summary of this meeting.")
                         }

@@ -71,7 +71,8 @@ struct MeetingDetailView: View {
                 }
                 Button("Cancel", role: .cancel) { pendingJoin = nil }
             } message: { request in
-                Text(request.explanation(summaryEnabled: state.settings.summaryEnabled))
+                Text(request.explanation(summaryEnabled: state.settings.summaryMode == .always
+                                          || (state.settings.summaryMode == .ask && request.previous.wantsSummary == true)))
             }
             .alert("These meetings can't be joined", isPresented: Binding(
                 get: { pendingJoin?.problem != nil }, set: { if !$0 { pendingJoin = nil } }), presenting: pendingJoin) { _ in
@@ -356,14 +357,40 @@ struct MeetingDetailView: View {
         pendingJoin = JoinRequest(previous: candidate.previous, meeting: m, problem: candidate.problem)
     }
 
+    /// Whether an export carries the summary: your choice in Settings › General, or asked here.
+    /// "Don't ask again" saves the answer as that setting. Returns nil when you cancel.
+    private func includeSummary(_ available: Bool) -> Bool? {
+        guard available else { return false }
+        switch state.settings.exportSummary {
+        case .include: return true
+        case .exclude: return false
+        case .ask:
+            let alert = NSAlert()
+            alert.messageText = "Include the summary?"
+            alert.informativeText = "The summary goes above the transcript."
+            alert.addButton(withTitle: "Include Summary")
+            alert.addButton(withTitle: "Transcript Only")
+            alert.addButton(withTitle: "Cancel")
+            alert.showsSuppressionButton = true
+            alert.suppressionButton?.title = "Don't ask again"
+            let response = alert.runModal()
+            guard response != .alertThirdButtonReturn else { return nil }
+            let include = response == .alertFirstButtonReturn
+            if alert.suppressionButton?.state == .on { state.settings.exportSummary = include ? .include : .exclude }
+            return include
+        }
+    }
+
     private func save(_ m: Meeting, _ t: Transcript, _ format: ExportFormat) {
+        let summary = store.summary(for: m.id)
+        guard let include = includeSummary(summary != nil && format.canIncludeSummary) else { return }
         let panel = NSSavePanel()
         panel.nameFieldStringValue = Exporter.fileName(for: m, format: format)
         if let type = UTType(filenameExtension: format.fileExtension) { panel.allowedContentTypes = [type] }
         panel.canCreateDirectories = true
         guard panel.runModal() == .OK, let url = panel.url else { return }
         do {
-            try Exporter.write(format, meeting: m, transcript: t, summary: store.summary(for: m.id), to: url)
+            try Exporter.write(format, meeting: m, transcript: t, summary: include ? summary : nil, to: url)
             savedExport = url
             state.announce("Saved \(url.lastPathComponent)")
             DispatchQueue.main.asyncAfter(deadline: .now() + 6) { if savedExport == url { savedExport = nil } }

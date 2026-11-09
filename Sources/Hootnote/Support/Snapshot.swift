@@ -102,6 +102,11 @@ enum Snapshot {
         dictation.previewListening(levels: wave, handsFree: true)
         shot(DictationPillView(controller: dictation), size: CGSize(width: 340, height: 44), name: "pill-handsfree", folder: folder)
         shot(env(SettingsView()), size: CGSize(width: 600, height: 470), name: "settings", folder: folder)
+        for (suffix, appearance) in appearances {
+            shot(env(AISetupSheet(previewDisconnected: true)), size: nil, name: "ai-setup-\(suffix)", folder: folder, appearance: appearance)
+            shot(env(SummaryPromptView(meetingID: UUID(), title: "Weekly team sync", service: "Claude")), size: nil,
+                 name: "summary-prompt-\(suffix)", folder: folder, appearance: appearance)
+        }
     }
 
     private static func shot<V: View>(_ view: V, size: CGSize?, name: String, folder: URL, settle: TimeInterval = 0.8,

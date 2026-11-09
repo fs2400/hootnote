@@ -31,6 +31,8 @@ struct Meeting: Codable, Identifiable, Hashable {
     var stopReason: String?
     /// The earlier meeting you said "Not now" to joining this one with: the header doesn't offer that join again.
     var joinOfferDeclined: UUID?
+    /// Your answer to "Summarize this meeting?" when the recording ended; nil when not asked or not answered.
+    var wantsSummary: Bool?
 
     var duration: TimeInterval { (endedAt ?? Date()).timeIntervalSince(startedAt) }
     var folder: URL { AppPaths.folder(for: id) }

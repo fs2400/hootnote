@@ -24,13 +24,15 @@ enum ExportFormat: String, CaseIterable, Identifiable {
         }
     }
     var isRichDocument: Bool { self == .word || self == .pdf }
+    /// Subtitles are the transcript only; every other format can carry the summary above it.
+    var canIncludeSummary: Bool { self != .srt }
 }
 
 enum Exporter {
     static func render(_ format: ExportFormat, meeting: Meeting, transcript: Transcript, summary: MeetingSummary?) -> String {
         switch format {
         case .markdown: return markdown(meeting: meeting, transcript: transcript, summary: summary)
-        case .text, .word, .pdf: return text(meeting: meeting, transcript: transcript)
+        case .text, .word, .pdf: return text(meeting: meeting, transcript: transcript, summary: summary)
         case .srt: return srt(transcript: transcript)
         }
     }
@@ -76,8 +78,9 @@ enum Exporter {
         return out
     }
 
-    static func text(meeting: Meeting, transcript: Transcript) -> String {
+    static func text(meeting: Meeting, transcript: Transcript, summary: MeetingSummary? = nil) -> String {
         var out = "\(meeting.title)\n\(meeting.startedAt.formatted(date: .complete, time: .shortened)) · \(meeting.duration.durationString)\n\n"
+        if let summary { out += summary.markdown + "\n\n" }
         for u in transcript.utterances {
             out += "\(transcript.speakerName(u.speakerID))  \(u.start.clockString)\n\(u.text)\n\n"
         }

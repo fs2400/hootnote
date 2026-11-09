@@ -5,6 +5,7 @@ struct MainView: View {
     @EnvironmentObject var store: MeetingStore
     @EnvironmentObject var settings: AppSettings
     @Environment(\.openWindow) private var openWindow
+    @State private var showAISetup = false
 
     private var search: String { state.searchQuery }
 
@@ -58,6 +59,13 @@ struct MainView: View {
             Text(state.lastError ?? "")
         }
         .onAppear { state.openMainWindow = { openWindow(id: "main") } }
+        // Offered once, after the welcome screen, when neither ChatGPT nor Claude is connected yet.
+        .task(id: settings.hasCompletedOnboarding) {
+            if settings.hasCompletedOnboarding, !settings.aiSetupOffered, !AIConnection.isReady { showAISetup = true }
+        }
+        .sheet(isPresented: $showAISetup, onDismiss: { settings.aiSetupOffered = true }) {
+            AISetupSheet().environmentObject(settings)
+        }
     }
 
     @ViewBuilder private var detail: some View {

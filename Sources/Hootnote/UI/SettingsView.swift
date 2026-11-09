@@ -32,6 +32,9 @@ private struct GeneralSettings: View {
             Toggle("Hide Dock icon (keep only the menu bar icon)", isOn: $settings.hideDockIcon)
                 .onChange(of: settings.hideDockIcon) { _, _ in state.applyDockIconSetting() }
             Section("Export") {
+                Picker("Include the summary", selection: $settings.exportSummary) {
+                    ForEach(ExportSummaryChoice.allCases) { Text($0.label).tag($0) }
+                }
                 Toggle("Save each transcript as Markdown automatically", isOn: $settings.autoExportMarkdown)
                 HStack {
                     Text(settings.exportFolder.path).lineLimit(1).truncationMode(.middle).foregroundStyle(.secondary)
@@ -292,7 +295,9 @@ private struct AISettings: View {
                     ForEach(AIProvider.allCases) { Text($0.label).tag($0) }
                 }
                 .pickerStyle(.segmented)
-                Toggle("Write a summary after each meeting", isOn: $settings.summaryEnabled)
+                Picker("After each meeting", selection: $settings.summaryMode) {
+                    ForEach(SummaryMode.allCases) { Text($0.label).tag($0) }
+                }
                 if settings.aiProvider == .chatgpt {
                     Picker("Model", selection: $settings.chatGPTModel) {
                         Text("Default").tag("")
@@ -312,6 +317,9 @@ private struct AISettings: View {
                     }
                     .disabled(!claude.hasKey)
                 }
+                if AIConnection.isReady {
+                    Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                }
             }
             Section("ChatGPT") {
                 HStack {
@@ -321,9 +329,7 @@ private struct AISettings: View {
                         Button("Sign Out") { Task { await chatGPT.signOut() } }
                     }
                 }
-                if chatGPT.isSignedIn {
-                    Link("Manage ChatGPT usage", destination: ChatGPTAccount.usageURL)
-                } else {
+                if !chatGPT.isSignedIn {
                     ChatGPTSignInButton()
                     Text("Requires ChatGPT Plus or Pro.").font(.caption).foregroundStyle(.secondary)
                 }
@@ -335,7 +341,6 @@ private struct AISettings: View {
                         Spacer()
                         Button("Remove Key") { claude.disconnect() }
                     }
-                    Link("Check Claude API credits", destination: ClaudeAccount.billingURL)
                 } else {
                     ClaudeKeyField()
                     Text("Claude Max, Ultra, and Team plans include monthly API credits that cover this.")

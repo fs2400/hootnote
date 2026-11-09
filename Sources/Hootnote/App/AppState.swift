@@ -153,6 +153,7 @@ final class AppState: ObservableObject {
                     }.value
                     store.update(id) { $0.endedAt = $0.startedAt.addingTimeInterval(duration); $0.statusDetail = nil }
                     processor.enqueue(id)
+                    askAboutSummary(id)
                 } catch {
                     store.update(id) { $0.status = .failed; $0.statusDetail = error.localizedDescription; $0.endedAt = $0.startedAt }
                 }
@@ -365,6 +366,40 @@ final class AppState: ObservableObject {
         dismissPrompt()
     }
 
+    // MARK: - Summarize this meeting?
+
+    /// The meeting the summary question is about, while it's showing.
+    private var summaryQuestion: UUID?
+
+    /// After a recording or upload, asks whether to summarize it, so summaries only cost tokens when wanted.
+    /// Unanswered, the question goes away after two minutes; the Summary tab still offers one.
+    func askAboutSummary(_ id: UUID) {
+        guard settings.summaryMode == .ask, AIConnection.isReady, let meeting = store.meeting(id) else { return }
+        summaryQuestion = id
+        panels.showSummaryQuestion(SummaryPromptView(meetingID: id, title: meeting.title, service: settings.aiProvider.label)
+            .environmentObject(self))
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(120))
+            guard let self, self.summaryQuestion == id else { return }
+            self.summaryQuestion = nil
+            self.panels.hideSummaryQuestion()
+        }
+    }
+
+    func answerSummaryQuestion(_ id: UUID, summarize: Bool) {
+        if summaryQuestion == id {
+            summaryQuestion = nil
+            panels.hideSummaryQuestion()
+        }
+        store.update(id) { $0.wantsSummary = summarize }
+        // Already transcribed: write it now. Otherwise the queue writes it when the transcript is ready.
+        guard summarize, store.meeting(id)?.status == .ready, store.summary(for: id) == nil else { return }
+        Task {
+            await processor.summarize(id)
+            processor.exportIfEnabled(id)
+        }
+    }
+
     // MARK: - Recording
 
     func startManualRecording() {
@@ -428,7 +463,10 @@ final class AppState: ObservableObject {
         default: break
         }
         store.update(rec.id) { $0.endedAt = endedAt ?? Date(); $0.status = .queued; $0.stopReason = reason }
-        if processesRecordings { processor.enqueue(rec.id) }
+        if processesRecordings {
+            processor.enqueue(rec.id)
+            askAboutSummary(rec.id)
+        }
         log.notice("Recording \(rec.id, privacy: .public) stopped: \(reason, privacy: .public)")
         announce("Recording stopped. Transcribing.")
     }

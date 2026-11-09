@@ -44,10 +44,10 @@ code-signing certificate in your keychain.
 ## Get started
 
 1. Open Hootnote and follow the welcome screen.
-2. Open **Settings** > **AI**. Click **Continue with ChatGPT**, or paste a Claude API key and click
-   **Connect**.
+2. In the **Connect ChatGPT or Claude** window, click **Continue with ChatGPT**, or paste a Claude API
+   key and click **Connect**.
 3. Join a call. When Hootnote asks, click **Record**.
-4. When the call ends, Hootnote transcribes it and writes a summary.
+4. When the call ends, click **Summarize** if you want a summary. Hootnote transcribes the call either way.
 5. Open the meeting to see the **Transcript**, **Summary**, and **Ask** tabs.
 
 ## Common tasks
@@ -58,7 +58,11 @@ code-signing certificate in your keychain.
 | Transcribe a file | Click **Upload audio** on Home, or drop the file on Home. |
 | Rename a speaker | Click the speaker's name in the transcript. |
 | Ask about a meeting | Open the meeting and click the **Ask** tab. |
+| Summarize a meeting later | On the **Summary** tab, click **Write summary**. |
 | Rewrite a summary | On the **Summary** tab, click **Rewrite**. |
+| Choose when summaries are written | Open **Settings** > **AI** and set **After each meeting**. |
+| Include or leave out the summary in exports | Open **Settings** > **General** and set **Include the summary**. |
+| Check your ChatGPT or Claude usage | On the **Summary** tab or in **Settings** > **AI**, click **Check usage**. |
 | Dictate into another app | Hold **fn**, speak, and release. |
 | Delete a meeting | Right-click the meeting and click **Delete Meeting**. |
 
