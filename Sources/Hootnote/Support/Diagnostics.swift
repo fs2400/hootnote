@@ -53,11 +53,30 @@ enum Diagnostics {
             print("no ready meeting"); return
         }
         let session = AskSession()
+        // HOOTNOTE_MODEL=claude/<model id> or chatgpt/<slug> asks a model other than the default.
+        if let spec = ProcessInfo.processInfo.environment["HOOTNOTE_MODEL"], let slash = spec.firstIndex(of: "/"),
+           let provider = AIProvider(rawValue: String(spec[..<slash])) {
+            let id = String(spec[spec.index(after: slash)...])
+            session.choice = AIModelChoice(provider: provider, modelID: id, name: id)
+        }
         let start = Date()
         await session.ask(question, meeting: m, transcript: t, summary: store.summary(for: m.id), settings: AppSettings.shared)
         guard let turn = session.turns.last else { return }
-        print("model: \(AppSettings.shared.chatGPTModel.isEmpty ? "default" : AppSettings.shared.chatGPTModel) · \(String(format: "%.1f", Date().timeIntervalSince(start))) s")
+        print("model: \(session.choice?.modelID ?? "default (\(AIModels.defaultChoice?.name ?? "none"))") · \(String(format: "%.1f", Date().timeIntervalSince(start))) s")
         print(turn.error.map { "ERROR: \($0)" } ?? "answer: \(turn.answer)")
+    }
+
+    /// `Hootnote --models`: the models each connected service lists right now, as the model menus show them.
+    static func listModels() async {
+        await AIModels.refresh()
+        print("default: \(AIModels.defaultChoice.map { "\($0.provider.label) · \($0.name) (\($0.modelID))" } ?? "none connected")")
+        for provider in AIModels.connected {
+            let lists = AIModels.menu(provider)
+            print("\n\(provider.label)")
+            for c in lists.main { print("  \(c.name)  [\(c.modelID)]") }
+            if !lists.more.isEmpty { print("  More Models:") }
+            for c in lists.more { print("    \(c.name)  [\(c.modelID)]") }
+        }
     }
 
     /// `Hootnote --summary-test <part of a meeting title>`: summarizes that meeting with the service chosen

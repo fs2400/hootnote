@@ -40,6 +40,13 @@ enum Entry {
             }
             dispatchMain()
         }
+        if args.count >= 2, args[1] == "--models" {
+            Task { @MainActor in
+                await Diagnostics.listModels()
+                exit(0)
+            }
+            dispatchMain()
+        }
         if args.count >= 2, ["--stop-reasons", "--stop-test"].contains(args[1]) {
             Task { @MainActor in
                 if args[1] == "--stop-reasons" {

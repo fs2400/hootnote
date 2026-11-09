@@ -23,6 +23,8 @@ final class ChatGPTAccount: ObservableObject {
     @Published private(set) var planUsageGranted = false
     @Published private(set) var models: [Model] = []
     @Published private(set) var signingIn = false
+    private var modelsLoadedAt: Date?
+    private var loadingModels = false
 
     var isSignedIn: Bool { email != nil && planUsageGranted }
 
@@ -173,6 +175,7 @@ final class ChatGPTAccount: ObservableObject {
         c.expiresAt = nil
         save(c)
         models = []
+        modelsLoadedAt = nil
     }
 
     // MARK: Models and requests
@@ -189,15 +192,29 @@ final class ChatGPTAccount: ObservableObject {
             guard m["visibility"] as? String == "list", let slug = m["slug"] as? String, !slug.isEmpty else { return nil }
             return Model(slug: slug, displayName: (m["display_name"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? slug)
         }
+        modelsLoadedAt = Date()
+    }
+
+    /// Loads the list again when it's more than five minutes old; keeps the old list if ChatGPT can't be reached.
+    func refreshModels() async {
+        guard isSignedIn, !loadingModels, Date().timeIntervalSince(modelsLoadedAt ?? .distantPast) > 300 else { return }
+        loadingModels = true
+        defer { loadingModels = false }
+        try? await loadModels()
     }
 
     /// The chosen model if the account still offers it, otherwise the first one ChatGPT lists.
     func model(preferring slug: String) async throws -> Model {
         if models.isEmpty { try await loadModels() }
-        guard let model = models.first(where: { $0.slug == slug }) ?? models.first else {
+        guard let model = resolve(slug) else {
             throw ChatGPTError.server("ChatGPT didn't offer any models for this account.")
         }
         return model
+    }
+
+    /// `model(preferring:)` from the list already loaded; nil before it loads.
+    func resolve(_ slug: String) -> Model? {
+        models.first(where: { $0.slug == slug }) ?? models.first
     }
 
     /// Streams one answer from the Responses API. `input` is the conversation so far (user and assistant turns).

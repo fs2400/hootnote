@@ -575,7 +575,8 @@ final class ProcessingQueue: ObservableObject {
         }
     }
 
-    func summarize(_ id: UUID) async {
+    /// Writes the summary with `choice`, or with the default model from Settings › AI when nil.
+    func summarize(_ id: UUID, using choice: AIModelChoice? = nil) async {
         guard let meeting = store.meeting(id), let transcript = store.transcript(for: id) else { return }
         // Not set up yet: the Summary tab offers ChatGPT sign-in or a Claude key instead of an error.
         guard AIConnection.isReady else { return }
@@ -583,7 +584,7 @@ final class ProcessingQueue: ObservableObject {
             let progress: @Sendable (String) -> Void = { text in
                 Task { @MainActor [weak self] in self?.setProgress(id, text) }
             }
-            let ai = try await AIConnection.current()
+            let ai = try await AIConnection.make(choice)
             func write() async throws -> String {
                 try await Summarizer.summarize(meeting: meeting, transcript: transcript, using: ai, progress: progress)
             }

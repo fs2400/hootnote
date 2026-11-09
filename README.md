@@ -61,6 +61,8 @@ code-signing certificate in your keychain.
 | Summarize a meeting later | On the **Summary** tab, click **Write summary**. |
 | Rewrite a summary | On the **Summary** tab, click **Rewrite**. |
 | Choose when summaries are written | Open **Settings** > **AI** and set **After each meeting**. |
+| Set the default model | Open **Settings** > **AI** and choose **Default model**. |
+| Use another model once | Click the model name beside **Ask**, **Write summary**, or **Rewrite**. |
 | Include or leave out the summary in exports | Open **Settings** > **General** and set **Include the summary**. |
 | Check your ChatGPT or Claude usage | On the **Summary** tab or in **Settings** > **AI**, click **Check usage**. |
 | Dictate into another app | Hold **fn**, speak, and release. |

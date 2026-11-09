@@ -283,7 +283,7 @@ private struct DictationSettings: View {
     }
 }
 
-private struct AISettings: View {
+struct AISettings: View {
     @EnvironmentObject var settings: AppSettings
     @ObservedObject private var chatGPT = ChatGPTAccount.shared
     @ObservedObject private var claude = ClaudeAccount.shared
@@ -291,34 +291,18 @@ private struct AISettings: View {
     var body: some View {
         Form {
             Section("Summaries and Ask") {
-                Picker("Use", selection: $settings.aiProvider) {
-                    ForEach(AIProvider.allCases) { Text($0.label).tag($0) }
+                LabeledContent("Default model") {
+                    if chatGPT.isSignedIn || claude.hasKey {
+                        ModelMenu(selection: defaultModel, compact: false)
+                    } else {
+                        Text("Connect ChatGPT or Claude below").foregroundStyle(.secondary)
+                    }
                 }
-                .pickerStyle(.segmented)
                 Picker("After each meeting", selection: $settings.summaryMode) {
                     ForEach(SummaryMode.allCases) { Text($0.label).tag($0) }
                 }
-                if settings.aiProvider == .chatgpt {
-                    Picker("Model", selection: $settings.chatGPTModel) {
-                        Text("Default").tag("")
-                        ForEach(chatGPT.models) { Text($0.displayName).tag($0.slug) }
-                        if !settings.chatGPTModel.isEmpty, !chatGPT.models.contains(where: { $0.slug == settings.chatGPTModel }) {
-                            Text(settings.chatGPTModel).tag(settings.chatGPTModel)
-                        }
-                    }
-                    .disabled(!chatGPT.isSignedIn)
-                } else {
-                    Picker("Model", selection: $settings.claudeModel) {
-                        Text("Claude Opus 5.5").tag("")
-                        ForEach(claude.models.filter { $0.id != ClaudeAccount.defaultModel }) { Text($0.displayName).tag($0.id) }
-                        if !settings.claudeModel.isEmpty, !claude.models.contains(where: { $0.id == settings.claudeModel }) {
-                            Text(settings.claudeModel).tag(settings.claudeModel)
-                        }
-                    }
-                    .disabled(!claude.hasKey)
-                }
-                if AIConnection.isReady {
-                    Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                if let provider = AIModels.defaultChoice?.provider {
+                    Link("Check \(provider.label) usage", destination: provider.usageURL)
                 }
             }
             Section("ChatGPT") {
@@ -349,10 +333,11 @@ private struct AISettings: View {
             }
         }
         .formStyle(.grouped)
-        .task {
-            if chatGPT.isSignedIn && chatGPT.models.isEmpty { try? await chatGPT.loadModels() }
-            if claude.hasKey && claude.models.isEmpty { try? await claude.loadModels() }
-        }
+    }
+
+    /// The model menu here sets the default rather than a one-off choice.
+    private var defaultModel: Binding<AIModelChoice?> {
+        Binding(get: { AIModels.defaultChoice }, set: { if let choice = $0 { AIModels.setDefault(choice) } })
     }
 }
 

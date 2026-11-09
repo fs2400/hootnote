@@ -51,7 +51,11 @@ enum Snapshot {
             shot(env(MeetingDetailView(meetingID: sample.id, initialTab: .summary).background(Theme.ground)), size: size,
                  name: "summary-light", folder: folder, settle: 2.0)
             shot(env(MeetingDetailView(meetingID: sample.id, initialTab: .ask).background(Theme.ground)), size: size,
-                 name: "ask-light", folder: folder, settle: 2.0)
+                 name: "ask-light", folder: folder, settle: 3.0)
+            shot(env(MeetingDetailView(meetingID: sample.id, initialTab: .ask).background(Theme.ground)), size: size,
+                 name: "ask-dark", folder: folder, settle: 2.0, appearance: .darkAqua)
+            shot(env(MeetingDetailView(meetingID: sample.id, initialTab: .summary).background(Theme.ground)), size: size,
+                 name: "summary-dark", folder: folder, settle: 2.0, appearance: .darkAqua)
             // The header, which offers a join when this meeting looks like the rest of the one before.
             for (suffix, appearance) in appearances {
                 shot(env(MeetingDetailView(meetingID: sample.id).background(Theme.ground)), size: CGSize(width: 1040, height: 300),
@@ -102,6 +106,10 @@ enum Snapshot {
         dictation.previewListening(levels: wave, handsFree: true)
         shot(DictationPillView(controller: dictation), size: CGSize(width: 340, height: 44), name: "pill-handsfree", folder: folder)
         shot(env(SettingsView()), size: CGSize(width: 600, height: 470), name: "settings", folder: folder)
+        for (suffix, appearance) in appearances {
+            shot(env(AISettings()), size: CGSize(width: 600, height: 470), name: "settings-ai-\(suffix)", folder: folder,
+                 settle: 3.0, appearance: appearance)
+        }
         for (suffix, appearance) in appearances {
             shot(env(AISetupSheet(previewDisconnected: true)), size: nil, name: "ai-setup-\(suffix)", folder: folder, appearance: appearance)
             shot(env(SummaryPromptView(meetingID: UUID(), title: "Weekly team sync", service: "Claude")), size: nil,

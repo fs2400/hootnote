@@ -9,6 +9,9 @@ final class ClaudeAccount: ObservableObject {
     struct Model: Identifiable, Hashable {
         let id: String
         let displayName: String
+        /// The most output the model can write in one answer.
+        var maxTokens: Int?
+        var created: Date?
     }
 
     static let defaultModel = "claude-opus-5-5"
@@ -25,6 +28,9 @@ final class ClaudeAccount: ObservableObject {
     private static let fallbackModels: Set<String> = ["claude-opus-5-5", "claude-opus-5", "claude-sonnet-5-5",
                                                       "claude-fable-5-1", "claude-fable-5"]
 
+    private var modelsLoadedAt: Date?
+    private var refreshing = false
+
     private init() { hasKey = Self.keychain.read() != nil }
 
     /// Checks the key with Claude, then saves it.
@@ -32,6 +38,7 @@ final class ClaudeAccount: ObservableObject {
         let key = key.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !key.isEmpty else { throw ClaudeError.message("Paste your Claude API key.") }
         models = try await Self.fetchModels(key: key)
+        modelsLoadedAt = Date()
         Self.keychain.write(Data(key.utf8))
         hasKey = true
     }
@@ -40,19 +47,33 @@ final class ClaudeAccount: ObservableObject {
         Self.keychain.delete()
         hasKey = false
         models = []
+        modelsLoadedAt = nil
     }
 
     func loadModels() async throws {
         models = try await Self.fetchModels(key: try apiKey())
+        modelsLoadedAt = Date()
+    }
+
+    /// Loads the list again when it's more than five minutes old; keeps the old list if Claude can't be reached.
+    func refreshModels() async {
+        guard hasKey, !refreshing, Date().timeIntervalSince(modelsLoadedAt ?? .distantPast) > 300 else { return }
+        refreshing = true
+        defer { refreshing = false }
+        try? await loadModels()
     }
 
     /// The chosen model if the key can use it, otherwise Claude Opus 5.5, otherwise the newest listed.
     func model(preferring id: String) async throws -> Model {
         if models.isEmpty { try await loadModels() }
-        let wanted = id.isEmpty ? Self.defaultModel : id
-        guard let model = models.first(where: { $0.id == wanted }) ?? models.first(where: { $0.id == Self.defaultModel })
-                ?? models.first else { throw ClaudeError.message("This API key can't use any Claude models.") }
+        guard let model = resolve(id) else { throw ClaudeError.message("This API key can't use any Claude models.") }
         return model
+    }
+
+    /// `model(preferring:)` from the list already loaded; nil before it loads.
+    func resolve(_ id: String) -> Model? {
+        let wanted = id.isEmpty ? Self.defaultModel : id
+        return models.first(where: { $0.id == wanted }) ?? models.first(where: { $0.id == Self.defaultModel }) ?? models.first
     }
 
     /// Streams one answer from the Messages API. `input` is the conversation so far (user and assistant turns).
@@ -64,9 +85,11 @@ final class ClaudeAccount: ObservableObject {
         req.timeoutInterval = 600
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.setValue("text/event-stream", forHTTPHeaderField: "Accept")
+        // Older models can write less than 64,000 tokens per answer and reject a larger limit.
+        let limit = min(64_000, models.first(where: { $0.id == model })?.maxTokens ?? 64_000)
         var body: [String: Any] = [
             "model": model,
-            "max_tokens": 64_000,
+            "max_tokens": limit,
             "stream": true,
             "system": instructions,
             "messages": input.map { ["role": $0.role, "content": $0.content] },
@@ -136,10 +159,27 @@ final class ClaudeAccount: ObservableObject {
         let (data, response) = try await URLSession.shared.data(for: req)
         if let http = response as? HTTPURLResponse, http.statusCode != 200 { throw error(status: http.statusCode, data: data) }
         let list = (try JSONSerialization.jsonObject(with: data) as? [String: Any])?["data"] as? [[String: Any]] ?? []
-        return list.compactMap { m in
+        let models: [Model] = list.compactMap { m in
             guard let id = m["id"] as? String else { return nil }
-            return Model(id: id, displayName: m["display_name"] as? String ?? id)
+            return Model(id: id, displayName: m["display_name"] as? String ?? id, maxTokens: m["max_tokens"] as? Int,
+                         created: (m["created_at"] as? String).flatMap(parseDate))
         }
+        // Newest first; models without a date keep Claude's order, after the dated ones.
+        return models.enumerated().sorted { a, b in
+            switch (a.element.created, b.element.created) {
+            case let (x?, y?) where x != y: return x > y
+            case (_?, nil): return true
+            case (nil, _?): return false
+            default: return a.offset < b.offset
+            }
+        }.map(\.element)
+    }
+
+    private static func parseDate(_ text: String) -> Date? {
+        let f = ISO8601DateFormatter()
+        if let date = f.date(from: text) { return date }
+        f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return f.date(from: text)
     }
 
     private static func error(status: Int, data: Data) -> ClaudeError {
@@ -164,49 +204,5 @@ enum ClaudeError: LocalizedError {
     case message(String)
     var errorDescription: String? {
         switch self { case .message(let text): return text }
-    }
-}
-
-/// The service chosen in Settings › AI for summaries and Ask.
-enum AIProvider: String, CaseIterable, Identifiable {
-    case chatgpt, claude
-    var id: String { rawValue }
-    var label: String { self == .chatgpt ? "ChatGPT" : "Claude" }
-    /// Where to see how much of your ChatGPT plan, or your Claude API credits, Hootnote has used.
-    var usageURL: URL {
-        URL(string: self == .chatgpt ? "https://chatgpt.com/settings/usage" : "https://platform.claude.com/settings/billing")!
-    }
-}
-
-/// One way to reach the chosen service: the model, how to label what it writes, and how to ask it.
-struct AIConnection {
-    let modelName: String
-    /// Saved as MeetingSummary.app ("ChatGPT" or "Claude").
-    let app: String
-    let respond: @MainActor (_ instructions: String, _ input: [ChatMessage], _ cache: Bool,
-                             _ onText: ((String) -> Void)?) async throws -> String
-
-    /// Whether the chosen service is set up (signed in to ChatGPT, or a Claude key saved).
-    @MainActor static var isReady: Bool {
-        AppSettings.shared.aiProvider == .chatgpt ? ChatGPTAccount.shared.isSignedIn : ClaudeAccount.shared.hasKey
-    }
-
-    @MainActor static func current() async throws -> AIConnection {
-        let settings = AppSettings.shared
-        switch settings.aiProvider {
-        case .chatgpt:
-            let account = ChatGPTAccount.shared
-            guard account.isSignedIn else { throw ChatGPTError.notSignedIn }
-            let model = try await account.model(preferring: settings.chatGPTModel)
-            return AIConnection(modelName: model.displayName, app: "ChatGPT") { instructions, input, _, onText in
-                try await account.respond(model: model.slug, instructions: instructions, input: input, onText: onText)
-            }
-        case .claude:
-            let account = ClaudeAccount.shared
-            let model = try await account.model(preferring: settings.claudeModel)
-            return AIConnection(modelName: model.displayName, app: "Claude") { instructions, input, cache, onText in
-                try await account.respond(model: model.id, instructions: instructions, input: input, cache: cache, onText: onText)
-            }
-        }
     }
 }

@@ -376,7 +376,7 @@ final class AppState: ObservableObject {
     func askAboutSummary(_ id: UUID) {
         guard settings.summaryMode == .ask, AIConnection.isReady, let meeting = store.meeting(id) else { return }
         summaryQuestion = id
-        panels.showSummaryQuestion(SummaryPromptView(meetingID: id, title: meeting.title, service: settings.aiProvider.label)
+        panels.showSummaryQuestion(SummaryPromptView(meetingID: id, title: meeting.title, service: AIModels.defaultChoice?.provider.label ?? settings.aiProvider.label)
             .environmentObject(self))
         Task { [weak self] in
             try? await Task.sleep(for: .seconds(120))

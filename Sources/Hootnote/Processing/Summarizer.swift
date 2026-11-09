@@ -133,6 +133,9 @@ final class AskSession: ObservableObject {
 
     @Published private(set) var turns: [Turn] = []
     @Published private(set) var isAnswering = false
+    /// The model from the menu beside the Ask box; nil means the default from Settings › AI.
+    /// It can change between questions: the conversation so far goes to the new model.
+    @Published var choice: AIModelChoice?
     private var history: [ChatMessage] = []
 
     func ask(_ question: String, meeting: Meeting, transcript: Transcript, summary: MeetingSummary?,
@@ -148,7 +151,7 @@ final class AskSession: ObservableObject {
         do {
             // The system message becomes the instructions; the rest is the conversation so far. The
             // transcript stays at the front, so follow-up questions reuse Claude's cached copy of it.
-            let ai = try await AIConnection.current()
+            let ai = try await AIConnection.make(choice)
             let answer = try await ai.respond(history[0].content, Array(history.dropFirst()), true) { [weak self] c in
                 self?.turns[index].answer += c
             }

@@ -113,8 +113,13 @@ highlighted word follows the voice, and selecting a word starts playback there.
 
 ## Summaries and Ask
 
-Summaries and Ask use ChatGPT or Claude, chosen in **Settings** > **AI**. No language model runs on the
-Mac. By default Hootnote asks "Summarize this meeting?" when a recording ends or an upload is read, and
+Summaries and Ask use ChatGPT or Claude. No language model runs on the Mac. **Default model** in
+**Settings** > **AI** sets the service and model. The model menu beside **Ask**, **Write summary**, and
+**Rewrite** picks another model for one conversation or summary. The menus list what each connected
+service offers right now (`GET /v1/models`), fetched again when a menu appears and the list is more than
+five minutes old. Claude's newest model in each family is at the top; older ones are under **More
+Models**. If the chosen model is no longer offered, Hootnote uses the service's default.
+`Hootnote --models` prints the lists. By default Hootnote asks "Summarize this meeting?" when a recording ends or an upload is read, and
 writes a summary only if you say yes (`Meeting.wantsSummary`), so meetings that don't need one cost
 nothing. **After each meeting** can also be set to always or never. Transcripts up to 400,000 characters are summarized in one request; longer ones are summarized in
 parts and then combined. `Hootnote --summary-test <part of a meeting title>` summarizes a meeting with the
@@ -143,7 +148,8 @@ credits for a linked Console organization, which cover these requests.
 - **Storage:** The key is kept in the Keychain (service `com.local.Hootnote.claude`). Hootnote checks it
   with `GET /v1/models` before saving it.
 - **Requests:** `POST https://api.anthropic.com/v1/messages`, streamed, with `anthropic-version:
-  2026-10-21`. The default model is `claude-opus-5-5`.
+  2026-10-21`. The default model is `claude-opus-5-5`. `max_tokens` is 64,000, or the model's own
+  limit if that is lower.
 - **Declines:** Requests to models with safety classifiers send `fallbacks: "default"` (beta
   `server-side-fallback-2026-07-01`), so a declined request is retried on the model Anthropic
   recommends.

@@ -12,6 +12,8 @@ struct SummaryView: View {
     @State private var summary: MeetingSummary?
     @State private var writing = false
     @State private var error: String?
+    /// The model from the menu beside Write summary and Rewrite; nil means the default.
+    @State private var choice: AIModelChoice?
 
     var body: some View {
         ScrollView {
@@ -19,13 +21,14 @@ struct SummaryView: View {
                 TimetableRule()
                 if let summary {
                     SummarySections(markdown: summary.markdown)
-                    HStack {
+                    HStack(spacing: 14) {
                         Text("\(writtenBy(summary)) · \(summary.createdAt.formatted(date: .abbreviated, time: .shortened))")
                             .font(Theme.caption).foregroundStyle(Theme.inkTertiary)
                         Spacer()
                         if ready {
-                            Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                            Link("Check \(provider.label) usage", destination: provider.usageURL)
                                 .font(Theme.caption)
+                            ModelMenu(selection: $choice)
                             Button("Rewrite") { Task { await write() } }.disabled(writing)
                         }
                     }
@@ -45,7 +48,8 @@ struct SummaryView: View {
                             }
                             HStack(spacing: 14) {
                                 Button("Write summary") { Task { await write() } }
-                                Link("Check \(settings.aiProvider.label) usage", destination: settings.aiProvider.usageURL)
+                                ModelMenu(selection: $choice)
+                                Link("Check \(provider.label) usage", destination: provider.usageURL)
                                     .font(Theme.caption)
                             }
                             .padding(.top, 4)
@@ -70,7 +74,10 @@ struct SummaryView: View {
         }
     }
 
-    private var ready: Bool { settings.aiProvider == .chatgpt ? chatGPT.isSignedIn : claude.hasKey }
+    private var ready: Bool { chatGPT.isSignedIn || claude.hasKey }
+
+    /// The service the next summary goes to, for the usage link.
+    private var provider: AIProvider { (choice ?? AIModels.defaultChoice)?.provider ?? settings.aiProvider }
 
     private func writtenBy(_ summary: MeetingSummary) -> String {
         switch summary.app {
@@ -84,9 +91,12 @@ struct SummaryView: View {
     private func write() async {
         writing = true
         error = nil
-        await processor.summarize(meeting.id)
+        let before = summary?.createdAt
+        await processor.summarize(meeting.id, using: choice)
         summary = store.summary(for: meeting.id)
-        if summary == nil { error = store.meeting(meeting.id)?.statusDetail ?? "Couldn't reach \(settings.aiProvider.label). Try again." }
+        if summary == nil || summary?.createdAt == before {
+            error = store.meeting(meeting.id)?.statusDetail ?? "Couldn't reach \(provider.label). Try again."
+        }
         processor.exportIfEnabled(meeting.id)
         writing = false
     }
@@ -148,6 +158,10 @@ struct AskView: View {
                     .textFieldStyle(.roundedBorder)
                     .focused($focused)
                     .onSubmit { send(question) }
+                if ready {
+                    ModelMenu(selection: $session.choice)
+                        .padding(.horizontal, 4)
+                }
                 Button("Ask") { send(question) }
                     .keyboardShortcut(.defaultAction)
                     .disabled(question.trimmingCharacters(in: .whitespaces).isEmpty || session.isAnswering || !ready)
@@ -160,7 +174,7 @@ struct AskView: View {
         .onAppear { focused = true }
     }
 
-    private var ready: Bool { settings.aiProvider == .chatgpt ? chatGPT.isSignedIn : claude.hasKey }
+    private var ready: Bool { chatGPT.isSignedIn || claude.hasKey }
 
     private var starters: [String] {
         ["What did we decide?", "What are my action items?", "Summarize what each person said."]
